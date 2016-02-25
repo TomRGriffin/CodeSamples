@@ -128,20 +128,18 @@ public class ArraysStrings {
 		System.out.println("String compare time = " + (endTime - startTime));
 	}
 	
-	/**
-	 * 1.4
-	 * Write a method to replace all spaces in a string with '%20'. You may assume that
-	 * the string has sufficient space at the end of the string to hold the additional
-	 * characters, and that you are given the "true" length of the string. (Note: if
-	 * implementing in Java, please use a character array so that you can perform this
-	 * operation in place.)
-	 * 
-	 * EXAMPLE
-	 * 
-	 * Input:   "Mr John Smith    "
-	 * Output:  "Mr%20John%20Smith"
-	 */
 	
+//	 Write a method to replace all spaces in a string with '%20'. You may assume that
+//	 the string has sufficient space at the end of the string to hold the additional
+//	 characters, and that you are given the "true" length of the string. (Note: if
+//	 implementing in Java, please use a character array so that you can perform this
+//	 operation in place.)
+//	 
+//	 EXAMPLE
+//	 
+//	 Input:   "Mr John Smith    "
+//	 Output:  "Mr%20John%20Smith"
+	 
 	private static void urlify(char[] inputStr, int length) {
 		int numSpaces = countSpaces(inputStr, length);
 		int endPtr = length - 1 + numSpaces * 2;
@@ -175,13 +173,24 @@ public class ArraysStrings {
 		urlify(inputStr.toCharArray(), 13);
 	}
 	
+//	Palindrome permutation: Given a string, write a function to check if it is a permutation of a 
+//	palindrome. A palindrome is a word or phrase that is the same forwards and backwards. A permutation
+//	is a rearrangement of letters. The palindrome does not need to be limited to just dictionary words.
+//
+//	Example
+//
+//	Input: Tact Coa
+//	Output: True (permutations: "taco cat", "atco cta", "acto tca" etc.)
+	
+	
+	
 	private static void initMatrix(int[][] matrix, int row, int col) {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				matrix[i][j] = (int) (Math.random() * 100);
 			}
 		}
-	}
+	`}
 	private static void printArray(int[][] matrix, int row, int col) {
 		System.out.println("{");
 		for (int i = 0; i < row; i++) {
