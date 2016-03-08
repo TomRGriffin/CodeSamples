@@ -39,6 +39,41 @@ public class Maths {
 		long time = ((endTime - startTime)/ Utils.TIME_INTERVAL);
 		long bigOTime = (long) (Math.pow(2, time));
 		System.out.println("Big O = " + bigOTime);
-		
+	}
+	
+	private static double sqrt(double number) {
+		double err = 1e-10, t = number, rem  = 0.0;
+		int n = 0;
+		while (Math.abs(t - rem) > (err * t)) {
+			System.out.println("Math.abs(t - rem) = " + Math.abs(t - rem));
+			rem = number/t;
+			t = (rem + t) / 2.0;
+			System.out.println("t = " + t);
+			n++;
+		}
+		System.out.println("Iterations = " + n);
+		return t;
+	}
+	public static void testSqrt() {
+		int number = 64;
+		System.out.println("Sqrt(" + number + ") = " + sqrt(number));
+	}
+	
+	private static boolean isPrime(int number) {
+		for (int i = 2; (i * i) <= number; i++) {
+			if (number % i == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static void testIsPrime() {
+		int number = 23;
+		System.out.println(number + " is prime = " + isPrime(number));
+		number = 16;
+		System.out.println(number + " is prime = " + isPrime(number));
+		number = 97;
+		System.out.println(number + " is prime = " + isPrime(number));
 	}
 }

@@ -1,9 +1,6 @@
 package Samples;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.Test;
 
 import static org.junit.Assert.*;
 public class ArraysStrings {
@@ -190,7 +187,7 @@ public class ArraysStrings {
 				matrix[i][j] = (int) (Math.random() * 100);
 			}
 		}
-	`}
+	}
 	private static void printArray(int[][] matrix, int row, int col) {
 		System.out.println("{");
 		for (int i = 0; i < row; i++) {
