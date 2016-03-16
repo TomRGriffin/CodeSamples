@@ -13,11 +13,12 @@ public class Solutions {
 //		ArraysStrings.testIsPermutations();
 //		ArraysStrings.testUrlify();
 //		ArraysStrings.testMatrixRotation();
+		ArraysStrings.testIsPalindromePermutation();
 //		BitManipulation.testSum();
 //		Sorting.testSorting(Sorting.BUBBLE_SORT);
 //		Sorting.testSorting(Sorting.INSERTION_SORT);
 //		Sorting.testSorting(Sorting.QUICK_SORT);
-		Sorting.testSorting(Sorting.MERGE_SORT);
+//		Sorting.testSorting(Sorting.BINARY_SEARCH);
 //		for (int i = 1; i < 4; i++) {
 //			Sorting.testSorting(i);
 //		}

@@ -1,5 +1,6 @@
 package Samples;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -178,9 +179,56 @@ public class ArraysStrings {
 //
 //	Input: Tact Coa
 //	Output: True (permutations: "taco cat", "atco cta", "acto tca" etc.)
+//	Input: Madam I m adam
+//	Output: True (permutations: "adam I m madam")
 	
+	private static boolean isPalindromePermutation(String inputStr) {
+		if (inputStr.isEmpty()) {
+			return true;
+		}
+		
+		if (inputStr.length() % 2 != 0) {
+			return false;
+		}
+		
+		HashMap<Character, Integer> charCounts = new HashMap<Character, Integer>();
+		int trimmedLength = 0;
+		for (int i = 0; i < inputStr.length(); i++) {
+			Character character = inputStr.charAt(i);
+			if (character - 'a' > 0) {
+				if (charCounts.containsKey(character)) {
+					charCounts.put(character, charCounts.get(character) + 1);
+				} else {
+					charCounts.put(character, 1);
+				}
+				trimmedLength++;
+			}
+		}
+		int oddCharsCount = 0;
+		
+		Iterator<Integer> charCountsIter = charCounts.values().iterator();
+		while(charCountsIter.hasNext()) {
+			if (charCountsIter.next() % 2 != 0) {
+				oddCharsCount++;
+			}
+		}
+		
+		if (trimmedLength % 2 == 0) {
+			return oddCharsCount == 0;
+		} else {
+			return oddCharsCount == 1;
+		}		
+	}
 	
+	public static void testIsPalindromePermutation() {
+//		String inputStr = "tact cao";
+//		String inputStr = "madam I m adam";
+
+		assertEquals(true, isPalindromePermutation(inputStr));
+	}
+
 	
+// Matrix rotation	
 	private static void initMatrix(int[][] matrix, int row, int col) {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
