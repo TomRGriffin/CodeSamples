@@ -221,9 +221,8 @@ public class ArraysStrings {
 	}
 	
 	public static void testIsPalindromePermutation() {
-//		String inputStr = "tact cao";
+		String inputStr = "tact cao";
 //		String inputStr = "madam I m adam";
-
 		assertEquals(true, isPalindromePermutation(inputStr));
 	}
 
