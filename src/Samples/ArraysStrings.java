@@ -191,25 +191,22 @@ public class ArraysStrings {
 			return false;
 		}
 		
-		HashMap<Character, Integer> charCounts = new HashMap<Character, Integer>();
 		int trimmedLength = 0;
+		int bitVector = 0;
+		int oddCharsCount = 0;
 		for (int i = 0; i < inputStr.length(); i++) {
 			Character character = inputStr.charAt(i);
-			if (character - 'a' > 0) {
-				if (charCounts.containsKey(character)) {
-					charCounts.put(character, charCounts.get(character) + 1);
+			int charBitValue = character - 'A';
+			if (charBitValue >= 0) {
+				charBitValue = 1 << (character - 'a');
+				if ((bitVector & charBitValue) > 0) {
+					oddCharsCount--;
+					bitVector ^= charBitValue;
 				} else {
-					charCounts.put(character, 1);
+					oddCharsCount++;
+					bitVector |= charBitValue;
 				}
 				trimmedLength++;
-			}
-		}
-		int oddCharsCount = 0;
-		
-		Iterator<Integer> charCountsIter = charCounts.values().iterator();
-		while(charCountsIter.hasNext()) {
-			if (charCountsIter.next() % 2 != 0) {
-				oddCharsCount++;
 			}
 		}
 		
@@ -221,7 +218,7 @@ public class ArraysStrings {
 	}
 	
 	public static void testIsPalindromePermutation() {
-		String inputStr = "tact cao";
+		String inputStr = "tact coa";
 //		String inputStr = "madam I m adam";
 		assertEquals(true, isPalindromePermutation(inputStr));
 	}
@@ -264,5 +261,53 @@ public class ArraysStrings {
 		}
 		printArray(retMatrix, row, col);
 	}
+	
+//	Implement a method to perform basic string compression using the counts 
+//	of repeated characters. For example, the string aabcccccaaa would become 
+//	a2blc5a3. If the "compressed" string would not become smaller than the orig­inal 
+//	string, your method should return the original string.
+	
+	private static String compressString(String inputStr) {
+		Integer compressedLength = computeCompressLength(inputStr);
+		if (compressedLength >= inputStr.length()) {
+			return inputStr;
+		}
+		StringBuilder outputStr = new StringBuilder(compressedLength);
+		int counter = 0;
+		for (int i = 0; i < inputStr.length(); i++) {
+			Character currentChar = inputStr.charAt(i);
+			counter++;
+			if ((i + 1 >= inputStr.length())  || 
+					currentChar != inputStr.charAt(i + 1)) {
+				outputStr.append(currentChar).append(Integer.toString(counter));
+				counter = 0;
+			}
+		}
+		return outputStr.toString();
+	}
+	private static Integer computeCompressLength(String inputStr) {
+		int counter = 0;
+		int compressedLength = 0;
+		for (int i = 0; i < inputStr.length(); i++) {
+			Character currentChar = inputStr.charAt(i);
+			counter++;
+			if ((i + 1 >= inputStr.length())  || 
+					currentChar != inputStr.charAt(i + 1)) {
+				compressedLength += 1 + String.valueOf(counter).length();
+				counter = 0;
+			}
+		}
+		return compressedLength;
+	}
+	
+	public static void testCompression() {
+//		String inputStr = "aabcccccaaa";
+		String inputStr = "a2b1c5a3";
+		String expectedOutput = "a2b1c5a3";
+		String actualOutput = compressString(inputStr);
+		System.out.println("Output = " + actualOutput);
+		assertEquals(expectedOutput, actualOutput);
+	}
+	
 }
 

@@ -13,7 +13,8 @@ public class Solutions {
 //		ArraysStrings.testIsPermutations();
 //		ArraysStrings.testUrlify();
 //		ArraysStrings.testMatrixRotation();
-		ArraysStrings.testIsPalindromePermutation();
+//		ArraysStrings.testIsPalindromePermutation();
+		ArraysStrings.testCompression();
 //		BitManipulation.testSum();
 //		Sorting.testSorting(Sorting.BUBBLE_SORT);
 //		Sorting.testSorting(Sorting.INSERTION_SORT);
