@@ -17,13 +17,15 @@ public class Solutions {
 //		ArraysStrings.testCompression();
 //		BitManipulation.testSum();
 //		Sorting.testSorting(Sorting.BUBBLE_SORT);
-		Sorting.testSorting(Sorting.INSERTION_SORT);
+//		Sorting.testSorting(Sorting.INSERTION_SORT);
 //		Sorting.testSorting(Sorting.QUICK_SORT);
 //		Sorting.testSorting(Sorting.BINARY_SEARCH);
 //		Sorting.testSorting(Sorting.SELECTION_SORT);
 //		for (int i = 1; i < 4; i++) {
 //			Sorting.testSorting(i);
 //		}
+
+		DynamicProgramming.testPath();
 	}
 
 }
