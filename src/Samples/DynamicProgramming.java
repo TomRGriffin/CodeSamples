@@ -15,11 +15,10 @@ public class DynamicProgramming {
                           { 1, 0, 1 } };
         DynamicProgramming dynamicProgramming = new DynamicProgramming();
         ArrayList<Integer> sumPoints = new ArrayList<>();
-        ArrayList<Point> upPath = dynamicProgramming.getUpPath(grid, sumPoints);
-        ArrayList<Point> downPath = dynamicProgramming.getDownPath(grid, sumPoints);
+        ArrayList<Point> path = dynamicProgramming.getPath(grid, sumPoints);
 
-        if (downPath != null) {
-            System.out.println("Path exist for robot, path size = " + downPath.size() + upPath.size());
+        if (path != null) {
+            System.out.println("Path exist for robot, path size = " + path.size());
             Stream<Integer> sumStream = sumPoints.stream();
             System.out.println("Sum of points = " + sumStream.reduce(0, (a, b) -> a + b));
         } else {
@@ -27,19 +26,11 @@ public class DynamicProgramming {
         }
     }
 
-    private ArrayList<Point> getUpPath(int [][] grid, ArrayList<Integer> sumPoints) {
+    private ArrayList<Point> getPath(int [][] grid, ArrayList<Integer> sumPoints) {
         if (grid == null || grid.length == 0) return null;
         ArrayList<Point> path = new ArrayList<Point>();
-        if (getUpPath(grid, grid.length - 1, grid[0].length - 1, path, sumPoints)) {
-            return path;
-        }
-        return null;
-    }
-
-    private ArrayList<Point> getDownPath(int [][] grid, ArrayList<Integer> sumPoints) {
-        if (grid == null || grid.length == 0) return null;
-        ArrayList<Point> path = new ArrayList<Point>();
-        if (getDownPath(grid, 0, 0, path, sumPoints)) {
+        if (getUpPath(grid, grid.length - 1, grid[0].length - 1, path, sumPoints) &&
+                getDownPath(grid, 0, 0, path, sumPoints)) {
             return path;
         }
         return null;
@@ -68,7 +59,6 @@ public class DynamicProgramming {
         if (col >= grid[0].length || row >= grid.length || grid[row][col] == -1) {
             return false;
         }
-
 
         boolean isAtEnd = (row == grid.length - 1) && (col == grid[0].length - 1);
 
