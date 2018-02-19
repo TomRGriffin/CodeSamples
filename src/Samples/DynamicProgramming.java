@@ -87,7 +87,6 @@ public class DynamicProgramming {
             }
             System.out.println();
         }
-
     }
     private static int countPaths(int[][] grid, int row, int col, int[][] pathsgrid) {
         if (col >= grid[0].length || row >= grid.length || grid[row][col] == -1) {

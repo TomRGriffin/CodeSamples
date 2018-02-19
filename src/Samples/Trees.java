@@ -53,11 +53,25 @@ public class Trees {
 //                System.out.println("Search left tree");
                 left.printInOrder();
             }
-            System.out.println(data);
+            System.out.println(", " +data);
             if (right != null) {
 //                System.out.println("Search right tree");
                 right.printInOrder();
             }
+        }
+
+        public void printPostOrder() {
+            if (right != null) {
+//                System.out.println("Search right tree");
+                right.printInOrder();
+            }
+            if (left != null) {
+//                System.out.println("Search left tree");
+                left.printInOrder();
+            }
+
+
+            System.out.println(", " +data);
         }
 
         public void printPreOrder() {
@@ -89,6 +103,7 @@ public class Trees {
             root.insert(number);
         }
 //        root.printInOrder();
-        root.printPreOrder();
+//        root.printPreOrder();
+        root.printPostOrder();
     }
 }

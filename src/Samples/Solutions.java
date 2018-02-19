@@ -27,7 +27,8 @@ public class Solutions {
 //		}
 //		Recursion.fibonacci(8);
 //		DynamicProgramming.testPath();
-		DynamicProgramming.testCountPaths();
+//		DynamicProgramming.testCountPaths();
+        Trees.testTreeInOrder();
 	}
 
 }
