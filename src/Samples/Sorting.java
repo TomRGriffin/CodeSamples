@@ -13,8 +13,8 @@ public class Sorting {
 	public static final int SELECTION_SORT = 5;
 	public static String[] SORT_TYPES = new String[] {"Bubble Sort", "Insertion Sort", 
 		"Quick Sort", "Merge Sort", "Binary Search", "Selection Sort"};
-	public static int[] NUMBERS_ARRAY = new int[] {9, 5, 8, 1, 3, 7, 4, 2, 6, 14, 10, 15, 13, 12, 11, 19, 18};
-//	public static int[] NUMBERS_ARRAY = new int[] {9, 5, 8, 1, 3, 7, 4, 2, 6};
+//	public static int[] NUMBERS_ARRAY = new int[] {9, 5, 8, 1, 3, 7, 4, 2, 6, 14, 10, 15, 13, 12, 11, 19, 18};
+	public static int[] NUMBERS_ARRAY = new int[] {9, 5, 8, 1, 3, 7, 4, 2, 6};
 	private static void swap(int[] numbers, int firstIndex, int secondIndex) {
 		int temp = numbers[firstIndex];
 		numbers[firstIndex] = numbers[secondIndex];
@@ -68,29 +68,35 @@ public class Sorting {
 		}
 		System.out.println("Loop count = " + loopCount);
 	}
-	
-	private static void quickSort(int[] numbers, int left, int right){
-		int i = left, j = right;
-		int pivot = numbers[(left + right) / 2];
-		while (i <= j) {
-			while (numbers[i] < pivot) {
-				i++;
-			} 
-			while (numbers[j] > pivot) {
-				j--;
-			}
-			if (i <= j) {
-				swap(numbers, i, j);
-				i++;
-				j--;
-			}
-		}
-		if (left < j) {
-			quickSort(numbers, left, j);
-		} else if (i < right){
-			quickSort(numbers, i, right);
-		}
-	}
+
+	private static void quickSort(int[] numbers, int left, int right) {
+	    if (left >= right) {
+	        return;
+        }
+        int pivot = numbers[(left + right) / 2];
+	    int index = partition(numbers, left, right, pivot);
+	    quickSort(numbers, left, index - 1);
+	    quickSort(numbers, index, right);
+    }
+
+    private static int partition(int[] numbers, int left, int right, int pivot) {
+	    while (left <= right) {
+	        while (numbers[left] < pivot) {
+	            left++;
+            }
+            while (numbers[right] > pivot) {
+	            right--;
+            }
+            if (numbers[left] >= numbers[right]) {
+	            swap(numbers, left, right);
+	            left++;
+	            right--;
+            }
+        }
+	    return left;
+    }
+
+
 	private static List<Integer> quickSortJava(List<Integer> numbers) {
 		if (numbers.size() < 2) {
 			return numbers;
@@ -110,37 +116,110 @@ public class Sorting {
 		sortedList.addAll(quickSortJava(higher));
 		return sortedList;
 	}
-	private static List<Integer> mergeSort(List<Integer> values) {
-		if (values.size() < 2) {
-			return values;
-		}
-		List<Integer> leftList = values.subList(0, values.size() / 2);
-		List<Integer> rightList = values.subList(values.size() / 2, values.size());
-		return merge(mergeSort(leftList), mergeSort(rightList));
-	}
-	private static List<Integer> merge(List<Integer> leftList, List<Integer> rightList) {
-		List<Integer> mergedList = new ArrayList<Integer>();
-		int leftPtr = 0, rightPtr = 0;
-		while (leftPtr < leftList.size() && rightPtr < rightList.size()) {
-			if (leftList.get(leftPtr) < rightList.get(rightPtr)) {
-				mergedList.add(leftList.get(leftPtr));
-				leftPtr++;
-			} else {
-				mergedList.add(rightList.get(rightPtr));
-				rightPtr++;
-			}
-		}
-		while (leftPtr < leftList.size()){
-			mergedList.add(leftList.get(leftPtr));
-			leftPtr++;
-		}
-		while (rightPtr < rightList.size()){
-			mergedList.add(rightList.get(rightPtr));
-			rightPtr++;
-		}
-		
-		return mergedList;
-	}
+	private static void mergeSort(int[] numbers, int[] sorted, int leftStart, int rightEnd) {
+	    if (leftStart >= rightEnd) {
+	        return;
+        }
+        int middle = (leftStart + rightEnd) / 2;
+	    mergeSort(numbers, sorted, leftStart, middle);
+	    mergeSort(numbers, sorted, middle + 1, rightEnd);
+	    merge(numbers, sorted, leftStart, rightEnd);
+    }
+    private static void merge(int[] numbers, int[] sorted, int leftStart, int rightEnd) {
+	    int leftEnd = (leftStart + rightEnd) / 2;
+	    int rightStart = leftEnd + 1;
+	    int size = rightEnd - leftStart + 1;
+
+	    int left = leftStart;
+	    int right = rightStart;
+	    int index = leftStart;
+
+	    while(left <= leftEnd && right <= rightEnd) {
+	        if (numbers[left] < numbers[right]) {
+	            sorted[index] = numbers[left];
+	            left++;
+            } else {
+	            sorted[index] = numbers[right];
+	            right++;
+            }
+            index++;
+        }
+        System.arraycopy(numbers, left, sorted, index, leftEnd - left + 1);
+        System.arraycopy(numbers, right, sorted, index, rightEnd - right + 1);
+        System.arraycopy(sorted, leftStart, numbers, leftStart, size);
+    }
+
+    private static List<Integer> mergeSortJava(List<Integer> values) {
+	    if (values.size() < 2) {
+	        return values;
+        }
+        int middle = values.size() / 2;
+	    List<Integer> leftList = values.subList(0, middle);
+	    List<Integer> rightList = values.subList(middle, values.size());
+	    return merge(mergeSortJava(leftList), mergeSortJava(rightList));
+
+    }
+
+    private static List<Integer> merge(List<Integer> leftList, List<Integer> rightList) {
+	    List<Integer> mergedList = new ArrayList<>();
+	    int left = 0, right = 0;
+	    int index = 0;
+	    while(left < leftList.size() && right < rightList.size()) {
+	        if (leftList.get(left) < rightList.get(right)) {
+	            mergedList.add(leftList.get(left));
+	            left++;
+            } else {
+                mergedList.add(rightList.get(right));
+                right++;
+            }
+        }
+
+        while (left < leftList.size()) {
+            mergedList.add(leftList.get(left));
+            left++;
+        }
+
+        while (right < rightList.size()) {
+            mergedList.add(rightList.get(right));
+            right++;
+        }
+
+        return mergedList;
+    }
+
+
+//
+//	private static List<Integer> mergeSort(List<Integer> values) {
+//		if (values.size() < 2) {
+//			return values;
+//		}
+//		List<Integer> leftList = values.subList(0, values.size() / 2);
+//		List<Integer> rightList = values.subList(values.size() / 2, values.size());
+//		return merge(mergeSort(leftList), mergeSort(rightList));
+//	}
+//	private static List<Integer> merge(List<Integer> leftList, List<Integer> rightList) {
+//		List<Integer> mergedList = new ArrayList<Integer>();
+//		int leftPtr = 0, rightPtr = 0;
+//		while (leftPtr < leftList.size() && rightPtr < rightList.size()) {
+//			if (leftList.get(leftPtr) < rightList.get(rightPtr)) {
+//				mergedList.add(leftList.get(leftPtr));
+//				leftPtr++;
+//			} else {
+//				mergedList.add(rightList.get(rightPtr));
+//				rightPtr++;
+//			}
+//		}
+//		while (leftPtr < leftList.size()){
+//			mergedList.add(leftList.get(leftPtr));
+//			leftPtr++;
+//		}
+//		while (rightPtr < rightList.size()){
+//			mergedList.add(rightList.get(rightPtr));
+//			rightPtr++;
+//		}
+//
+//		return mergedList;
+//	}
 	
 	private static boolean binarySearch(List<Integer> numbers, Integer value) {
 		if (numbers == null || numbers.isEmpty()) {
@@ -174,16 +253,18 @@ public class Sorting {
 				insertionSort(NUMBERS_ARRAY);
 				break;
 			case QUICK_SORT:
-//				quickSort(NUMBERS_ARRAY, 0, NUMBERS_ARRAY.length - 1);
-				sortedList = quickSortJava(intList);
+				quickSort(NUMBERS_ARRAY, 0, NUMBERS_ARRAY.length - 1);
+//				sortedList = quickSortJava(intList);
 				break;
 			case MERGE_SORT:
-			    sortedList = mergeSort(intList);
+			    sortedList = mergeSortJava(intList);
+//                int[] tempSortedNumbers = new int[NUMBERS_ARRAY.length];
+//			    mergeSort(NUMBERS_ARRAY, tempSortedNumbers, 0, NUMBERS_ARRAY.length - 1);
 				break;
 			case BINARY_SEARCH:
-				sortedList = mergeSort(intList);
-			    boolean valueFound = binarySearch(sortedList, 18);
-			    System.out.println("Binary search, value exist = " + valueFound);
+//				sortedList = mergeSort(intList);
+//			    boolean valueFound = binarySearch(sortedList, 18);
+//			    System.out.println("Binary search, value exist = " + valueFound);
 				break;
 			case SELECTION_SORT:
 				selectionSort(NUMBERS_ARRAY);

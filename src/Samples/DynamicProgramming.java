@@ -75,4 +75,32 @@ public class DynamicProgramming {
     }
 
 
+    public static void testCountPaths() {
+        int[][] grid = {{1, 0, -1},
+                        {1, 1, -1},
+                        {1, 1, 1}};
+        int [][] pathsGrid = new int[grid.length][grid[0].length];
+        System.out.println("Total paths = " + countPaths(grid, 0, 0, pathsGrid));
+        for (int i = 0; i < pathsGrid.length ; i++) {
+            for (int j = 0; j < pathsGrid[0].length ; j++) {
+                System.out.print(pathsGrid[i][j] + ", ");
+            }
+            System.out.println();
+        }
+
+    }
+    private static int countPaths(int[][] grid, int row, int col, int[][] pathsgrid) {
+        if (col >= grid[0].length || row >= grid.length || grid[row][col] == -1) {
+            return 0;
+        }
+        if ((row == grid.length - 1) && (col == grid[0].length - 1)) {
+            return 1;
+        }
+
+        int paths = countPaths(grid, row + 1, col, pathsgrid) + countPaths(grid, row, col + 1, pathsgrid);
+//        System.out.println("row = " + row + ", col = " + col + ", paths = " + paths);
+        pathsgrid[row][col] = paths;
+        return paths;
+    }
+
 }
