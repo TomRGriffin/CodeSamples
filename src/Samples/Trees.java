@@ -11,6 +11,19 @@ public class Trees {
         }
 
         public void insert(int value) {
+            if (left == null) {
+                left = new Node(value);
+            } else if (right == null) {
+                right = new Node(value);
+            } else if (height(left) > height(right)) {
+                right.insert(value);
+            } else {
+                left.insert(value);
+            }
+
+        }
+
+        public void insertInOrder(int value) {
             if (value <= data) {
                 if (left == null) {
                     System.out.println("Creating left node with value = " + value);
@@ -88,11 +101,17 @@ public class Trees {
             }
         }
 
-        public int height(Node node) {
+        public static int height(Node node) {
             if (node == null) {
                 return 0;
             }
             return Math.max(height(node.left), height(node.right)) + 1;
+        }
+        public static int size(Node node) {
+            if (node == null) {
+                return 0;
+            }
+            return size(node.left) + size(node.right) + 1;
         }
     }
 
@@ -105,5 +124,38 @@ public class Trees {
 //        root.printInOrder();
 //        root.printPreOrder();
         root.printPostOrder();
+    }
+
+    public static void testValidBST() {
+        int[] array = new int[] {1};
+        Node root = new Node(1);
+        for (int number : array) {
+            root.insert(number);
+        }
+        System.out.println("IsValidBst = " + isValidBST(root));
+    }
+
+    public static boolean isValidBST(Node root) {
+        int numberOfItems =  Node.size(root);
+        int[] values = new int[numberOfItems];
+        getValues(root, values);
+        boolean valid = true;
+        for (int i = 0; i < values.length - 1; i++) {
+            if (values[i] >= values[i + 1]) {
+                return false;
+            }
+        }
+        return valid;
+    }
+    static int index = 0;
+
+    static void getValues(Node root, int[] values) {
+        if (root == null) {
+            return;
+        }
+        getValues(root.left, values);
+        values[index] = root.data;
+        index++;
+        getValues(root.right, values);
     }
 }
