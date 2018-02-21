@@ -28,7 +28,10 @@ public class Solutions {
 //		Recursion.fibonacci(8);
 //		DynamicProgramming.testPath();
 //		DynamicProgramming.testCountPaths();
-        Trees.testTreeInOrder();
+//        Trees.testTreeInOrder();
+//		FizzBuzz.fizzBuzz(20);
+//		FizzBuzz.fizzBuzzThread(16);
+        Trees.testValidBST();
 	}
 
 }

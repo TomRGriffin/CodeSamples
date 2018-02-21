@@ -10,20 +10,20 @@ public class Trees {
             this.data = data;
         }
 
-        public void insert(int value) {
+        public void insertRandom(int value) {
             if (left == null) {
                 left = new Node(value);
             } else if (right == null) {
                 right = new Node(value);
             } else if (height(left) > height(right)) {
-                right.insert(value);
+                right.insertRandom(value);
             } else {
-                left.insert(value);
+                left.insertRandom(value);
             }
 
         }
 
-        public void insertInOrder(int value) {
+        public void insert(int value) {
             if (value <= data) {
                 if (left == null) {
                     System.out.println("Creating left node with value = " + value);
@@ -127,13 +127,35 @@ public class Trees {
     }
 
     public static void testValidBST() {
-        int[] array = new int[] {1};
+        int[] array = new int[] {2, 3};
         Node root = new Node(1);
         for (int number : array) {
             root.insert(number);
         }
-        System.out.println("IsValidBst = " + isValidBST(root));
+        System.out.println("IsValidBst = " + checkValidBST(root));
     }
+
+    public static boolean checkValidBST(Node root) {
+        if (root == null) {
+            return false;
+        }
+        if(root.left == null && root.right == null) return true;
+        return isValidBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    public static boolean isValidBST(Node root, int min, int max) {
+        if (root == null) {
+            return true;
+        }
+        if (root.data <= min || root.data >= max) {
+            return false;
+        }
+
+        boolean leftTreeValid = isValidBST(root.left, min, root.data);
+        boolean rightTreeValid = isValidBST(root.right, root.data, max);
+        return leftTreeValid && rightTreeValid;
+    }
+
 
     public static boolean isValidBST(Node root) {
         int numberOfItems =  Node.size(root);

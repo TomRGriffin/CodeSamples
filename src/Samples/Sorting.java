@@ -221,23 +221,38 @@ public class Sorting {
 //		return mergedList;
 //	}
 	
-	private static boolean binarySearch(List<Integer> numbers, Integer value) {
-		if (numbers == null || numbers.isEmpty()) {
+//	private static boolean binarySearch(List<Integer> numbers, Integer value) {
+//		if (numbers == null || numbers.isEmpty()) {
+//			return false;
+//		}
+//
+//		Integer comparison = numbers.get(numbers.size()/2);
+//		if (value.equals(comparison)) {
+//			return true;
+//		}
+//
+//		if (value < comparison) {
+//			return binarySearch(numbers.subList(0, numbers.size()/2), value);
+//		} else {
+//			return binarySearch(numbers.subList(numbers.size()/2 + 1, numbers.size()), value);
+//		}
+//	}
+
+	private static boolean binarySearch(int[] numbers, int left, int right, int value) {
+		if (numbers == null || numbers.length == 0 || left >= right) {
 			return false;
 		}
-		
-		Integer comparison = numbers.get(numbers.size()/2);
-		if (value.equals(comparison)) {
+
+		int middle = (left + right) / 2;
+		if (numbers[middle] > value) {
+			return binarySearch(numbers, left, middle, value);
+		} else if (numbers[middle] < value) {
+			return binarySearch(numbers, middle + 1, right, value);
+		} else {
 			return true;
 		}
-		
-		if (value < comparison) {
-			return binarySearch(numbers.subList(0, numbers.size()/2), value);
-		} else {
-			return binarySearch(numbers.subList(numbers.size()/2 + 1, numbers.size()), value);
-		}
 	}
-	
+
 	public static void testSorting(int sortType) {
 		List<Integer> intList = new ArrayList<Integer>();
 	    for (int index = 0; index < NUMBERS_ARRAY.length; index++) {
@@ -265,6 +280,10 @@ public class Sorting {
 //				sortedList = mergeSort(intList);
 //			    boolean valueFound = binarySearch(sortedList, 18);
 //			    System.out.println("Binary search, value exist = " + valueFound);
+                int[] tempSortedNumbers = new int[NUMBERS_ARRAY.length];
+			    mergeSort(NUMBERS_ARRAY, tempSortedNumbers, 0, NUMBERS_ARRAY.length - 1);
+				boolean found = binarySearch(tempSortedNumbers, 0, NUMBERS_ARRAY.length - 1, 18);
+				System.out.println("Binary search, value exist = " + found);
 				break;
 			case SELECTION_SORT:
 				selectionSort(NUMBERS_ARRAY);
