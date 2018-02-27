@@ -31,7 +31,11 @@ public class Solutions {
 //        Trees.testTreeInOrder();
 //		FizzBuzz.fizzBuzz(20);
 //		FizzBuzz.fizzBuzzThread(16);
-        Trees.testValidBST();
+//        Trees.testValidBST();
+//		Sorting.smallDifference();
+//		EazyLeetCode.testHammingDistance();
+//		EazyLeetCode.testValidParentheses();
+		EazyLeetCode.testFloodFill();
 	}
 
 }
