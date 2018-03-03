@@ -35,7 +35,12 @@ public class Solutions {
 //		Sorting.smallDifference();
 //		EazyLeetCode.testHammingDistance();
 //		EazyLeetCode.testValidParentheses();
-		EazyLeetCode.testFloodFill();
+//		EazyLeetCode.testFloodFill();
+//		GoogleLeetCode.testTrap();
+//		GoogleLeetCode.testFindMaxOnes();
+//		GoogleLeetCode.testNonRepeatingChar();
+//		GoogleLeetCode.testIsValidPalindrome();
+		GoogleLeetCode.testIntersection();
 	}
 
 }

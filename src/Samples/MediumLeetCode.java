@@ -38,32 +38,32 @@ public class MediumLeetCode {
         }
         return maxIndex;
     }
-
-    public void addToLeftTree(TreeNode node, int value) {
-        if (node.val < value) {
-            if (node.left == null) {
-                node.left = new TreeNode(value);
-            } else {
-                if (node.left.val > value)
-            }
-        }
-    }
-
-    public TreeNode constructMaximumBinaryTree(int[] nums) {
-        int index = findMax(nums);
-        int maxValue = nums[index];
-        TreeNode root = new TreeNode(maxValue);
-        for (int i = 0; i < nums.length ; i++) {
-            if (index < i) {
-                addToLeftTree(root, nums[i]);
-            } else {
-                addToRightTree(root, nums[i]);
-            }
-        }
-        return root;
-    }
-    public static void testMaxBinaryTree() {
-        int[] nums = new int[] { 3,2,1,6,0,5 };
-        new MediumLeetCode().constructMaximumBinaryTree(nums);
-    }
+//
+//    public void addToLeftTree(TreeNode node, int value) {
+//        if (node.val < value) {
+//            if (node.left == null) {
+//                node.left = new TreeNode(value);
+//            } else {
+//                if (node.left.val > value)
+//            }
+//        }
+//    }
+//
+//    public TreeNode constructMaximumBinaryTree(int[] nums) {
+//        int index = findMax(nums);
+//        int maxValue = nums[index];
+//        TreeNode root = new TreeNode(maxValue);
+//        for (int i = 0; i < nums.length ; i++) {
+//            if (index < i) {
+//                addToLeftTree(root, nums[i]);
+//            } else {
+//                addToRightTree(root, nums[i]);
+//            }
+//        }
+//        return root;
+//    }
+//    public static void testMaxBinaryTree() {
+//        int[] nums = new int[] { 3,2,1,6,0,5 };
+//        new MediumLeetCode().constructMaximumBinaryTree(nums);
+//    }
 }
