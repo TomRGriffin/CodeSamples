@@ -40,7 +40,8 @@ public class Solutions {
 //		GoogleLeetCode.testFindMaxOnes();
 //		GoogleLeetCode.testNonRepeatingChar();
 //		GoogleLeetCode.testIsValidPalindrome();
-		GoogleLeetCode.testIntersection();
+//		GoogleLeetCode.testIntersection();
+		GoogleLeetCode.testShortPalindrome();
 	}
 
 }

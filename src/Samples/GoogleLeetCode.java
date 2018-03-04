@@ -214,11 +214,69 @@ public class GoogleLeetCode {
 //    Given "aacecaaa", return "aaacecaaa".
 //    Given "abcd", return "dcbabcd".
     public static void testShortPalindrome() {
-        System.out.println("Is valid palindrome = " + new GoogleLeetCode().shortestPalindrome("abcd"));
+        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome("aba"));
+        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome("abcd"));
+        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome("aacecaaa"));
+        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome(""));
+        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome("abb"));
+//        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome("abbacd"));
+//        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome("aabba"));
+//        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome("abb"));
+        System.out.println("Shortest palindrome = " + new GoogleLeetCode().shortestPalindrome("abbacd"));
     }
 
     
     public String shortestPalindrome(String s) {
-        return "";
+        if (s == null || s.isEmpty()) return s;
+
+        int minLength = findMinPalindromeLength(s);
+        int i = 0, j = s.length() - 1;
+        StringBuilder sBuilder = new StringBuilder(minLength);
+        while (i < minLength) {
+            sBuilder.insert(i, s.charAt(j - i));
+            i++;
+        }
+        sBuilder.insert(i, s);
+        return sBuilder.toString();
+    }
+
+    private int findMinPalindromeLength(String s) {
+       int i = 0, j = s.length() - 1;
+       int minLength = 0;
+
+        while (s.charAt(i) != s.charAt(j)) {
+            j--;
+            minLength++;
+        }
+
+       while (i < j) {
+           if(s.charAt(i) == s.charAt(j)) {
+               minLength++;
+           } else {
+               break;
+           }
+           i++;
+       }
+
+
+//           minLength = s.length() - j;
+        if (minLength % 2 == 0) {
+            minLength--;
+        }
+
+//       minLength = isPalindrome ? s.length() : s.length() - j - 1;
+//       minLength = minLength > 0 ? minLength - 1 : minLength;
+       return minLength;
+    }
+
+//    Closest Binary Search Tree Value
+//    Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
+//
+//            Note:
+//    Given target value is a floating point.
+//    You are guaranteed to have only one unique value in the BST that is closest to the target.
+
+    public static void testClosestBinary() {
+        
     }
 }
