@@ -269,14 +269,127 @@ public class GoogleLeetCode {
        return minLength;
     }
 
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+    }
 //    Closest Binary Search Tree Value
 //    Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
-//
-//            Note:
+//    Note:
 //    Given target value is a floating point.
 //    You are guaranteed to have only one unique value in the BST that is closest to the target.
-
     public static void testClosestBinary() {
-        
+//        [1,2,3,5,8,6,9]
+//        [4,2,5,1,3]
+//        3.714286
+        TreeNode root = new TreeNode(4);
+        root.left = new TreeNode(2);
+        root.left.left = new TreeNode(1);
+        root.left.right = new TreeNode(3);
+        root.right = new TreeNode(5);
+//        root.right.left = new TreeNode(6);
+//        root.right.right = new TreeNode(9);
+        System.out.println("Closest value = " + new GoogleLeetCode().findClosest(root, 3.1));
+    }
+
+    private int findClosest(TreeNode root, double target) {
+        if (root == null) return -1;
+        return (int) findClosest(root, round(target), root.val, Integer.MAX_VALUE);
+//        return closest(root, target, root.val);
+    }
+    double round( double f) {
+        if ((f * 10) % 10 >= 5) {
+            return Math.ceil(f);
+        } else {
+            return Math.floor(f);
+        }
+
+    }
+    private int findClosest(TreeNode root, double target, int value, double distance) {
+        if (root == null) return value;
+        double currentDistance = Math.abs(root.val - target);
+        if (currentDistance < distance) {
+            value = root.val;
+        }
+        if (target < root.val) {
+            value = findClosest(root.left, target, value, currentDistance);
+        } else if (target > root.val) {
+            value = findClosest(root.right, target, value, currentDistance);
+        }
+        return value;
+    }
+
+//    private int closest(TreeNode node, double target, int val) {
+//        if (node == null) return val;
+//        if (Math.abs(node.val - target) < Math.abs(val - target)) val = node.val;
+//        if (node.val < target) val = closest(node.right, target, val);
+//        else if (node.val > target) val = closest(node.left, target, val);
+//        return val;
+//    }
+
+//    Spiral Matrix
+//    Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+//    For example,
+//    Given the following matrix:
+//            [
+//            [ 1, 2, 3 ],
+//            [ 4, 5, 6 ],
+//            [ 7, 8, 9 ]
+//            ]
+//    You should return [1,2,3,6,9,8,7,4,5].
+    public static void testSpiralOrder() {
+        int[][] matrix = new int[][]{
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        };
+        int[][] matrix1 = new int[][]{
+                {7, 8, 9}
+        };
+        int[][] matrix2 = new int[][]{
+                {7}, {8}, {9}
+        };
+        System.out.println("List = " + new GoogleLeetCode().spiralOrder(matrix));
+        System.out.println("List = " + new GoogleLeetCode().spiralOrder(matrix1));
+        System.out.println("List = " + new GoogleLeetCode().spiralOrder(matrix2));
+    }
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> resultList = new ArrayList<Integer>();
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return resultList;
+        }
+
+        int colBegin = 0, colEnd = matrix[0].length - 1;
+        int rowBegin = 0, rowEnd = matrix.length - 1;
+
+        while ((rowBegin <= rowEnd) && (colBegin <= colEnd)) {
+            for (int i = colBegin; i <= colEnd; i++) {
+                resultList.add(matrix[rowBegin][i]);
+            }
+            rowBegin++;
+
+            for (int i = rowBegin; i <= rowEnd; i++) {
+                resultList.add(matrix[i][colEnd]);
+            }
+            colEnd--;
+
+            if (rowBegin <= rowEnd) {
+                for (int i = colEnd; i >= colBegin; i--) {
+                    resultList.add(matrix[rowEnd][i]);
+                }
+            }
+            rowEnd--;
+
+            if (colBegin <= colEnd) {
+                for (int i = rowEnd; i >= rowBegin; i--) {
+                    resultList.add(matrix[i][colBegin]);
+                }
+            }
+            colBegin++;
+
+        }
+        return resultList;
     }
 }

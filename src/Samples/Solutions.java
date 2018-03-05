@@ -41,7 +41,9 @@ public class Solutions {
 //		GoogleLeetCode.testNonRepeatingChar();
 //		GoogleLeetCode.testIsValidPalindrome();
 //		GoogleLeetCode.testIntersection();
-		GoogleLeetCode.testShortPalindrome();
+//		GoogleLeetCode.testShortPalindrome();
+//		GoogleLeetCode.testClosestBinary();
+        GoogleLeetCode.testSpiralOrder();
 	}
 
 }
