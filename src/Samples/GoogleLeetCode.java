@@ -307,6 +307,7 @@ public class GoogleLeetCode {
         }
 
     }
+
     private int findClosest(TreeNode root, double target, int value, double distance) {
         if (root == null) return value;
         double currentDistance = Math.abs(root.val - target);
@@ -314,9 +315,11 @@ public class GoogleLeetCode {
             value = root.val;
         }
         if (target < root.val) {
-            value = findClosest(root.left, target, value, currentDistance);
+            // left
+            value = findClosest(root.left, target, root.val, currentDistance);
         } else if (target > root.val) {
-            value = findClosest(root.right, target, value, currentDistance);
+            //right
+            value = findClosest(root.right, target, root.val, currentDistance);
         }
         return value;
     }
