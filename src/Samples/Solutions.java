@@ -42,8 +42,11 @@ public class Solutions {
 //		GoogleLeetCode.testIsValidPalindrome();
 //		GoogleLeetCode.testIntersection();
 //		GoogleLeetCode.testShortPalindrome();
-		GoogleLeetCode.testClosestBinary();
-//        GoogleLeetCode.testSpiralOrder();
+//		GoogleLeetCode.testClosestBinary();
+//      GoogleLeetCode.testSpiralOrder();
+//        GeeksForGeeks.testProductArray();
+//		FacebookLeetCode.testSubarraySum();
+		FacebookLeetCode.testBuildTree();
 	}
 
 }

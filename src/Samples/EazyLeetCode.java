@@ -140,5 +140,4 @@ public class EazyLeetCode {
         fill(image, sr, sc + 1, color, newColor);
         fill(image, sr, sc - 1, color, newColor);
     }
-
 }
