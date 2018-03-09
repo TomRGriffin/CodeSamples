@@ -48,7 +48,9 @@ public class Solutions {
 //		FacebookLeetCode.testSubarraySum();
 //		FacebookLeetCode.testBuildTree();
 //		Trees.testFindLeaves();
-		Maths.testMaxSubArray();
+//		Maths.testMaxSubArray();
+//		Maths.testFactorCombinations();
+		Maths.testMyPow();
 	}
 
 }
