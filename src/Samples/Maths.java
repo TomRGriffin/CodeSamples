@@ -76,4 +76,21 @@ public class Maths {
 		number = 97;
 		System.out.println(number + " is prime = " + isPrime(number));
 	}
+
+	public static void testMaxSubArray() {
+		int [] nums = new int[] { -2,1,-3,4,-1,2,1,-5,4 };
+		System.out.println("Max sum arrays = " + new Maths().maxSubArray(nums));
+	}
+
+	public int maxSubArray(int[] nums) {
+		int[] sumArray = new int[nums.length];
+		sumArray[0] = nums[0];
+		int maxSum = nums[0];
+		for (int i = 1; i < nums.length; i++) {
+			sumArray[i] = nums[i] +
+					(sumArray[i - 1] > 0 ? sumArray[i - 1] : 0);
+			maxSum = Math.max(maxSum, sumArray[i]);
+		}
+		return maxSum;
+	}
 }

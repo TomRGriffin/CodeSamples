@@ -46,7 +46,9 @@ public class Solutions {
 //      GoogleLeetCode.testSpiralOrder();
 //        GeeksForGeeks.testProductArray();
 //		FacebookLeetCode.testSubarraySum();
-		FacebookLeetCode.testBuildTree();
+//		FacebookLeetCode.testBuildTree();
+//		Trees.testFindLeaves();
+		Maths.testMaxSubArray();
 	}
 
 }
