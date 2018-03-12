@@ -309,7 +309,30 @@ public class ArraysStrings {
 		assertEquals(expectedOutput, actualOutput);
 	}
 
-
+//	class Solution {
+//		public List<Integer> findDuplicates(int[] nums) {
+//			int[] x=new int[nums.length+1];
+//			List<Integer> rs=new ArrayList<Integer>();
+//			for(int i=0;i<nums.length;i++){
+//				x[nums[i]]++;
+//			}
+//			for(int j=0;j<x.length;j++){
+//				if(x[j]==2) rs.add(j);
+//			}return  rs;
+//		}
+////	}
+//int [] dups = new int [nums.length + 1];
+//
+//	List<Integer> list = new ArrayList<>();
+//        for (int i = 0; i < nums.length; i++){
+//		dups[nums[i]]++;
+//	}
+//        System.out.println("Dups = " + Arrays.toString(dups));
+//        for (int i = 0; i < dups.length; i++){
+//		if (dups[i] >= 2) {
+//			list.add(i);
+//		}
+//	}
 
 }
 

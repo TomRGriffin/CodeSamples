@@ -297,5 +297,36 @@ public class Sorting {
 			System.out.println("Sorted List = " + sortedList);
 		}
 	}
-	
+
+//	Given two array of integers(the first array is array A, the second array is array B), now we are going to find a element in array A which is A[i], and another element in array B which is B[j], so that the difference between A[i] and B[j] (|A[i] - B[j]|) is as small as possible, return their smallest difference.
+//			Example
+//	For example, given array A = [3,6,7,4], B = [2,8,9,3], return 0
+//
+	public static void smallDifference() {
+		int [] A = new int[] { 3, 6, 7, 4};
+		int [] B = new int[] { 2, 8, 9, 3};
+		int[] sortedNumbers = new int[A.length];
+		mergeSort(A, sortedNumbers, 0, A.length - 1);
+		int minDiff = Integer.MAX_VALUE;
+		for (int i = 0; i < B.length; i++) {
+			int currDiff = binarySearchDiff(A, B[i]);
+			minDiff = Math.min(currDiff, minDiff);
+		}
+		System.out.println("Min diff = " + minDiff);
+	}
+
+	public static int binarySearchDiff(int[] A, int value) {
+		int left = 0, right = A.length - 1;
+
+		while (left + 1 < right) {
+			int middle = (left + right) / 2;
+			if (A[middle] < value) {
+				left = middle;
+			} else {
+				right = middle;
+			}
+		}
+		return Math.min(Math.abs(A[left] - value), Math.abs(A[right] - value));
+	}
+
 }

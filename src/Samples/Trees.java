@@ -1,6 +1,10 @@
 package Samples;
 
+import apple.laf.JRSUIUtils;
 import org.omg.CORBA.MARSHAL;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Trees {
     public static class Node {
@@ -179,5 +183,45 @@ public class Trees {
         values[index] = root.data;
         index++;
         getValues(root.right, values);
+    }
+
+//    Find Leaves of Binary Tree
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+    }
+    public static void testFindLeaves() {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+        root.right = new TreeNode(3);
+        System.out.println("Tree leaves = " + new Trees().findLeaves(root));
+    }
+
+    private int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        List<List<Integer>> lists = new ArrayList<List<Integer>>();
+        findLeaves(lists, root);
+        return lists;
+    }
+
+    public int findLeaves( List<List<Integer>> list, TreeNode root) {
+        if (root == null) return  -1;
+        int leftLevel = findLeaves(list, root.left);
+        int rightLevel = findLeaves(list, root.right);
+        int level = Math.max(leftLevel, rightLevel) + 1;
+        if(list.size() == level) {
+            list.add(new ArrayList<Integer>());
+        }
+        list.get(level).add(root.val);
+        root.left = root.right = null;
+        return level;
     }
 }

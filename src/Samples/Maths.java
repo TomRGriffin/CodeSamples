@@ -1,5 +1,8 @@
 package Samples;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class Maths {
@@ -76,4 +79,62 @@ public class Maths {
 		number = 97;
 		System.out.println(number + " is prime = " + isPrime(number));
 	}
+
+	public static void testMaxSubArray() {
+		int [] nums = new int[] { -2,1,-3,4,-1,2,1,-5,4 };
+		System.out.println("Max sum arrays = " + new Maths().maxSubArray(nums));
+	}
+
+	public int maxSubArray(int[] nums) {
+		int[] sumArray = new int[nums.length];
+		sumArray[0] = nums[0];
+		int maxSum = nums[0];
+		for (int i = 1; i < nums.length; i++) {
+			sumArray[i] = nums[i] +
+					(sumArray[i - 1] > 0 ? sumArray[i - 1] : 0);
+			maxSum = Math.max(maxSum, sumArray[i]);
+		}
+		return maxSum;
+	}
+
+	public static void testFactorCombinations() {
+	    System.out.println("Factors = " + new Maths().getFactors(12));
+    }
+
+    public List<List<Integer>> getFactors(int n) {
+        List<List<Integer>> factorsLists = new ArrayList<List<Integer>>();
+        getFactors(factorsLists, new ArrayList<Integer>(), n , 2);
+        return factorsLists;
+    }
+    public void getFactors(List<List<Integer>> result, List<Integer> list, int n, int start) {
+	    if (n <= 1) {
+	        if (list.size() > 1) {
+	            result.add(new ArrayList<>(list));
+            }
+        }
+        for (int i = start; i <= n; i++){
+	        if (n % i == 0) {
+	            list.add(i);
+	            getFactors(result, list, n/i, i);
+	            list.remove(list.size() - 1);
+            }
+        }
+    }
+
+    public static void testMyPow() {
+	    System.out.println("Power = " + new Maths().myPow(2, 6));
+    }
+    public double myPow(double x, int n) {
+        double result = 1;
+        long pow = Math.abs((long)n);
+        while(pow > 0) {
+            if(pow % 2 == 1)  {
+                result *= x;
+            }
+            pow /= 2;
+            x *= x;
+        }
+        return n < 0 ?  1 / result : result;
+    }
+    [1,0,0,0,0,0,1]
 }
