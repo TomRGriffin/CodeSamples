@@ -136,4 +136,5 @@ public class Maths {
         }
         return n < 0 ?  1 / result : result;
     }
+    [1,0,0,0,0,0,1]
 }
