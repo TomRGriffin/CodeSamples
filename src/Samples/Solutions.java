@@ -51,7 +51,11 @@ public class Solutions {
 //		Maths.testMaxSubArray();
 //		Maths.testFactorCombinations();
 //		Maths.testMyPow();
-		ArraysStrings.testMissingPositive();
+//        ArraysStrings.testMissingMininumInt();
+//		Maths.testMyPow();
+//		ArraysStrings.testMissingPositive();
+//        Threads.testThreadSync();
+        Maths.testRandomWithSameProb();
 	}
 
 }

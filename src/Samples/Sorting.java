@@ -16,9 +16,7 @@ public class Sorting {
 //	public static int[] NUMBERS_ARRAY = new int[] {9, 5, 8, 1, 3, 7, 4, 2, 6, 14, 10, 15, 13, 12, 11, 19, 18};
 	public static int[] NUMBERS_ARRAY = new int[] {9, 5, 8, 1, 3, 7, 4, 2, 6};
 	private static void swap(int[] numbers, int firstIndex, int secondIndex) {
-		int temp = numbers[firstIndex];
-		numbers[firstIndex] = numbers[secondIndex];
-		numbers[secondIndex] = temp;
+		Utils.swap(numbers, firstIndex, secondIndex);
 	}
 	
 	private static void bubbleSort(int[] numbers) {

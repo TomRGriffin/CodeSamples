@@ -1,6 +1,5 @@
 package Samples;
 
-import apple.laf.JRSUIUtils;
 import org.omg.CORBA.MARSHAL;
 
 import java.util.ArrayList;

@@ -334,6 +334,78 @@ public class ArraysStrings {
 //		}
 //	}
 
+	public static void testMissingMininumInt() {
+		int[] nums = new int[] { 3, 4, -1 , 1};
+//		int[] nums1 = new int[] {-10,-3,-100,-1000,-239,1};
+//		int[] nums1 = new int[] {1000, -1};
+		int[] nums1 = new int[] {1, 1};
+//		int[] nums1 = new int[] {1, 2, 0};
+		System.out.println("Missing int = " + new ArraysStrings().findMissingInt(nums));
+		System.out.println("Missing int = " + new ArraysStrings().findMissingInt(nums1));
+	}
+
+
+	int findMissingIntFailed(int[] nums) {
+		if (nums.length == 0) return 1;
+		if (nums.length == 1) return nums[0] == 1 ? 2 : 1;
+		int start = 0;
+		for (int i = 0; i < nums.length; i++) {
+			if (nums[i] < 0) {
+				Utils.swap(nums, i, start);
+				start++;
+			}
+		}
+//		start--;
+		int positiveStart = start;
+		for (int i = nums.length - 1; i >= positiveStart; i--) {
+			if (nums[i] + start - 1 != i) {
+				int to = nums[i] >= nums.length ? nums.length - 1 : nums[i];
+				if (to != i) {
+					Utils.swap(nums, to, i);
+					start++;
+				}
+			}
+		}
+		if (nums.length - 1 == positiveStart) return nums[positiveStart] == 1 ? 2 : 1;
+		for (int i = positiveStart; i < nums.length; i++) {
+			if (i == 0 && nums[i] == 1 && i < nums.length - 1 && nums[i + 1] != 2) {
+				return 2;
+			} else {
+				if (nums[0] == 0 || nums[0] == 1) {
+
+				} else if (nums[i] != i) {
+					return i;
+				}
+			}
+		}
+		return nums[nums.length - 1] + 1;
+	}
+
+
+
+	int findMissingInt(int[] A) {
+		int n = A.length;
+		int out_of_bound = n + 1;
+		for (int i = 0; i < n; ++i)
+			if (A[i] <= 0)
+				A[i] = out_of_bound;
+
+		/* second iteration: construct a hash map. map<int, int>, first argument is index
+		 * second argument: if positive, it exist, else, it doesn't. e.g. A[0] = 4,
+		 * A[0] (i.e. 1) exist */
+		for (int i = 0; i < n; ++i) {
+			int abs_i = Math.abs(A[i]);
+			if (abs_i <= n)
+				A[abs_i-1] = -Math.abs(A[abs_i-1]);
+		}
+
+		/* third iteration: check the first positive value in A[] */
+		for (int i = 0; i < n; ++i) {
+			if (A[i] > 0)
+				return i + 1;
+		}
+		return n + 1;
+	}
 	public static  void testMissingPositive() {
 //		int[] nums = new int[] { 3, 4, -1, 1 };
 		int[] nums = new int[] { 1, 2, 0 };

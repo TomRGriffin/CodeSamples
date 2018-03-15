@@ -15,4 +15,10 @@ public class Utils {
 			simulateTimeComplexity();
 		}
 	}
+
+	public static void swap(int[] numbers, int firstIndex, int secondIndex) {
+		int temp = numbers[firstIndex];
+		numbers[firstIndex] = numbers[secondIndex];
+		numbers[secondIndex] = temp;
+	}
 }

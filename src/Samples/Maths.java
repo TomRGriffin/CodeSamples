@@ -136,4 +136,15 @@ public class Maths {
         }
         return n < 0 ?  1 / result : result;
     }
+
+    public static void testRandomWithSameProb() {
+		System.out.println("Probality " + new Maths().rand(1, 4));
+//		System.out.println("Probality " + new Maths().rand(1, 4));
+//		System.out.println("Probality " + new Maths().rand(1, 4));
+//		System.out.println("Probality " + new Maths().rand(1, 4));
+
+	}
+	int rand(int lower, int higher) {
+		return lower + (int) (Math.random() * (higher - lower + 1));
+	}
 }
