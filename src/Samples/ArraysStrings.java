@@ -460,5 +460,56 @@ public class ArraysStrings {
 		}
 		System.out.println("Merged Array = " + Arrays.toString(nums1));
 	}
+//    https://leetcode.com/problems/remove-duplicate-letters/description/
+//    Given a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and
+//    only once. You must make sure your result is the smallest in lexicographical order among all possible results.
+//    Example:
+//    Given "bcabc"
+//    Return "abc"
+//
+//    Given "cbacdcbc"
+//    Return "acdb"
+    public String removeDuplicateLetters(String s) {
+        int[] charMap = new int [128];
+        Arrays.fill(charMap, 0);
+        int minIndex = Integer.MAX_VALUE;
+        for (int i = 0; i < s.length(); i++) {
+            int index = s.charAt(i) - 'a';
+            charMap[index]++;
+            minIndex = Math.min(minIndex, index);
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+		    char ch = s.charAt(i);
+			int index = ch - 'a';
+
+			if (charMap[index] == 1) {
+                stringBuilder.append(ch);
+            } else if (charMap[index] > 1) {
+                if (minIndex >= index) {
+                    stringBuilder.append(ch);
+                    charMap[index] = 0;
+                    minIndex = index + 1;
+                } else if (minIndex < index) {
+                    if (i + 1 < s.length()) {
+                        int nextIndex = s.charAt(i + 1) - 'a';
+                        if (index < nextIndex) {
+                            stringBuilder.append(ch);
+                            charMap[index] = 0;
+                        }
+                    }
+                }
+                charMap[index]--;
+            }
+		}
+        return stringBuilder.toString();
+    }
+    public static void testRemoveDuplicatedLetters() {
+	    System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicateLetters("cbacdcbc"));
+	    System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicateLetters("bcabc"));
+//	    System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicateLetters("cabc"));
+//	    System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicateLetters("ccacbaba"));
+
+    }
 }
 

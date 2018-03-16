@@ -55,7 +55,8 @@ public class Solutions {
 //		Maths.testMyPow();
 //		ArraysStrings.testMissingPositive();
 //        Threads.testThreadSync();
-        Maths.testRandomWithSameProb();
+//        Maths.testRandomWithSameProb();
+        ArraysStrings.testRemoveDuplicatedLetters();
 	}
 
 }
