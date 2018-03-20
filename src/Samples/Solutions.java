@@ -56,7 +56,12 @@ public class Solutions {
 //		ArraysStrings.testMissingPositive();
 //        Threads.testThreadSync();
 //        Maths.testRandomWithSameProb();
-        ArraysStrings.testRemoveDuplicatedLetters();
+//        ArraysStrings.testRemoveDuplicatedLetters();
+//		DynamicProgramming.testCutOffTrees();
+//		Trees.testBFSTraversal();
+//		AmazonLeetCode.testMinCost();
+		AmazonLeetCode.testMaxStack();
+
 	}
 
 }
