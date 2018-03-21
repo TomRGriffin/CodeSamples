@@ -118,56 +118,22 @@ public class AmazonLeetCode {
 
         public void push(int x) {
             stack.push(x);
-            if(maxStack.isEmpty()) {
-                maxStack.push(x);
-            } else {
-                // maxStack.push(x);
-                Stack<Integer> tempStack = new Stack<Integer>();
-                while (!maxStack.isEmpty()) {
-                    int max = maxStack.peek();
-                    if(max <= x) {
-                        // maxStack.push(max);
-                        maxStack.push(x);
-                        break;
-                    } else {
-                        tempStack.push(maxStack.pop());
-                        if(maxStack.isEmpty()) {
-                            maxStack.push(x);
-                            break;
-                        }
-                    }
 
-                }
-                while(!tempStack.isEmpty()) {
-                    maxStack.push(tempStack.pop());
-                }
+            if(maxStack.isEmpty() || x > maxStack.peek()) {
+                maxStack.push(x);
             }
         }
 
         public int pop() {
-            if (stack.isEmpty()) return -1;
             int val = stack.pop();
-            Stack<Integer> tempStack = new Stack<Integer>();
-            while (!maxStack.isEmpty()) {
-                int max = maxStack.pop();
-                if(val != max) {
-                    tempStack.push(max);
-                } else {
-                    break;
-                }
+            if (val == maxStack.peek()) {
+                maxStack.pop();
             }
-            while(!tempStack.isEmpty()) {
-                maxStack.push(tempStack.pop());
-            }
-            // if(val == peekMax()) {
-            //     maxStack.pop();
-            // }
             return val;
         }
 
         public int top() {
-            int x = stack.peek();
-            return x;
+            return stack.peek();
         }
 
         public int peekMax() {
@@ -189,11 +155,7 @@ public class AmazonLeetCode {
             }
             while(!tempStack.isEmpty()) {
                 int val = tempStack.pop();
-                stack.push(val);
-//                if (val >= peekMax()) {
-//                    maxStack.push(val);
-//                }/
-
+                push(val);
             }
             return max;
         }
@@ -209,6 +171,122 @@ public class AmazonLeetCode {
  * int param_5 = obj.popMax();
  */
 
+//Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+//
+//    Example:
+//
+//    Input: 1->2->4, 1->3->4
+//    Output: 1->1->2->3->4->4
+    public static void testMergeTwoSortedList() {
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(4);
+        l1.next.next.next = new ListNode(5);
+        l1.next.next.next.next = new ListNode(8);
+        ListNode l2 = new ListNode(1);
+        l2.next = new ListNode(3);
+        l2.next.next = new ListNode(4);
+        printLinkedList(l1);
+        printLinkedList(l2);
+        ListNode node = new AmazonLeetCode().mergeTwoLists(l1, l2);
+        printLinkedList(node);
+        ListNode recNode = new AmazonLeetCode().mergeTwoListsRec(l1, l2);
+        printLinkedList(recNode);
+    }
 
+    public static void printLinkedList(ListNode l1) {
+        while (l1 != null) {
+            System.out.print(l1.val + " -> ");
+            l1 = l1.next;
+        }
+        System.out.println();
+    }
+
+    public static class ListNode {
+      int val;
+      ListNode next;
+      ListNode(int x) { val = x; }
+    }
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode head = dummyHead;
+        dummyHead.next = head;
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
+                head.next = new ListNode(l1.val);
+                l1 = l1.next;
+            } else {
+                head.next = new ListNode(l2.val);
+                l2 = l2.next;
+            }
+            head = head.next;
+        }
+
+        if (l1 != null) head.next = l1;
+        if (l2 != null) head.next = l2;
+        return dummyHead.next;
+    }
+
+    public ListNode mergeTwoListsRec(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        if (l1.val < l2.val) {
+            l1.next = mergeTwoListsRec(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoListsRec(l2.next, l1);
+            return l2;
+        }
+    }
+
+//    Reverse a singly linked list.
+//    Hint:
+//    A linked list can be reversed either iteratively or recursively. Could you implement both?
+    public static void testReverseLinkedList() {
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(2);
+        l1.next.next = new ListNode(3);
+//        l1.next.next.next = new ListNode(5);
+//        l1.next.next.next.next = new ListNode(8);
+        printLinkedList(l1);
+//        ListNode node = new AmazonLeetCode().reverseList(l1);
+//        ListNode node = new AmazonLeetCode().reverseListRec(l1, null);
+        ListNode node = new AmazonLeetCode().reverseListRecSolution(l1);
+        printLinkedList(node);
+    }
+    public ListNode reverseList(ListNode head) {
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+        ListNode p = head;
+        ListNode q = null;
+        ListNode r = null;
+        while (p != null) {
+            q = p.next;
+            p.next = r;
+            r = p;
+            p = q;
+        }
+        return r;
+    }
+    public ListNode reverseListRec(ListNode head, ListNode prev) {
+        if (head == null) return null;
+        if(head.next == null){ //if this is the end of the list, then this is the new head
+            head.next = prev;
+            return head;
+        }
+
+        ListNode reverseHead = reverseListRec(head.next, head);
+        head.next = prev;
+        return reverseHead;
+    }
+
+    public ListNode reverseListRecSolution(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode reverseHead = reverseListRecSolution(head.next);
+        head.next.next = head;
+        head.next = null;
+        return reverseHead;
+    }
 }
 

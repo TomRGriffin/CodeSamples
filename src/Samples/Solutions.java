@@ -60,8 +60,10 @@ public class Solutions {
 //		DynamicProgramming.testCutOffTrees();
 //		Trees.testBFSTraversal();
 //		AmazonLeetCode.testMinCost();
-		AmazonLeetCode.testMaxStack();
-
+//		AmazonLeetCode.testMaxStack();
+//		AmazonLeetCode.testMergeTwoSortedList();
+//		AmazonLeetCode.testReverseLinkedList();
+		ArraysStrings.testReverseVowels();
 	}
 
 }

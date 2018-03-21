@@ -511,5 +511,55 @@ public class ArraysStrings {
 //	    System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicateLetters("ccacbaba"));
 
     }
+
+//    345. Reverse Vowels of a String
+//			DescriptionHintsSubmissionsDiscussSolution
+//	Write a function that takes a string as input and reverse only the vowels of a string.
+//
+//			Example 1:
+//	Given s = "hello", return "holle".
+//
+//	Example 2:
+//	Given s = "leetcode", return "leotcede".
+//"heilluo" -> "houllie"
+//	Note:
+//	The vowels does not include the letter "y".
+
+	public static void testReverseVowels() {
+		String s = "aA";
+		System.out.println("Reversed vowels = " + new ArraysStrings().reverseVowels(s));
+	}
+
+	public String reverseVowels(String s) {
+		Map<Character, Boolean> vowelsMap = new HashMap<>();
+		vowelsMap.put('a', true);
+		vowelsMap.put('e', true);
+		vowelsMap.put('i', true);
+		vowelsMap.put('o', true);
+		vowelsMap.put('u', true);
+		vowelsMap.put('A', true);
+		vowelsMap.put('E', true);
+		vowelsMap.put('I', true);
+		vowelsMap.put('O', true);
+		vowelsMap.put('U', true);
+		char [] charArray = s.toCharArray();
+		int i = 0, j = s.length() - 1;
+		while (i < j) {
+			while(i < j && !vowelsMap.containsKey(charArray[i])) {
+				i++;
+			}
+			while(i < j && !vowelsMap.containsKey(charArray[j])) {
+				j--;
+			}
+			if (charArray[i] != charArray[j]) {
+				char tmp = charArray[i];
+				charArray[i] = charArray[j];
+				charArray[j] = tmp;
+			}
+			i++;
+			j--;
+		}
+		return String.valueOf(charArray);
+	}
 }
 
