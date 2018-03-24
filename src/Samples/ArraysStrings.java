@@ -1,8 +1,5 @@
 package Samples;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 public class ArraysStrings {
@@ -561,5 +558,175 @@ public class ArraysStrings {
 		}
 		return String.valueOf(charArray);
 	}
+
+//	316. Remove Duplicate Letters
+//			DescriptionHintsSubmissionsDiscussSolution
+//	Given a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
+//
+//	Example:
+//	Given "bcabc"
+//	Return "abc"
+//
+//	Given "cbacdcbc"
+//	Return "acdb"
+	public static void testRemoveDuplicateLetters() {
+		String s = "bcabc";
+//		System.out.println("Reversed vowels = " + new ArraysStrings().removeDuplicates(s));
+		System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicates("cbacdcbc"));
+//		System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicates("bcabc"));
+//	    System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicates("cabc"));
+//	    System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicates("ccacbaba"));
+//	    System.out.println("Removed duplicate letters = " + new ArraysStrings().removeDuplicates("baa"));
+	}
+
+	public String removeDuplicates(String s) {
+        Stack<Character> stack = new Stack<>();
+        int[] count = new int[26];
+        char[] charArray = s.toCharArray();
+        boolean[] visited = new boolean[26];
+        for (char ch: charArray) {
+            count[ch - 'a']++;
+        }
+        for (char ch: charArray) {
+            count[ch - 'a']--;
+            if (visited[ch - 'a']) {
+                continue;
+            }
+
+            while(!stack.isEmpty() && stack.peek() > ch && count[stack.peek() - 'a'] > 0) {
+                visited[stack.peek() - 'a'] = false;
+                stack.pop();
+            }
+            stack.push(ch);
+            visited[ch - 'a'] = true;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char ch: stack) {
+            sb.append(ch);
+        }
+        return sb.toString();
+	}
+//
+//    class Solution {
+//        public static void main(String[] args) {
+//            ArrayList<String> strings = new ArrayList<String>();
+//            strings.add("Hello, World!");
+//            strings.add("Welcome to CoderPad.");
+//            strings.add("This pad is running Java 8.");
+//
+//            for (String string : strings) {
+//                System.out.println(string);
+//            }
+//            String [] words = new String[] {"abcd", "abced", "abd","abc", "ababdes"}; //"ab"
+//            String longestPrefix = findLongestPrefix(words);
+//            System.out.println("longest common prefix: " + longestPrefix);
+//        }
+//
+//        private static String findLongestPrefix(String[] words) {
+//            if (words.length == 0) return "";
+//            if (words.length == 1) return words[0];
+//            String word1 = words[0];
+//            String word2 = words[1];
+//            String prefix = "";
+//            int i = 0;
+//            // while(word1.charAt(i) == word2.charAt(i)) {
+//            //   prefix = prefix + word1.charAt(i);
+//            //   i++;
+//            // }
+//            int j = prefix.length()
+//            if (!prefix.isEmpty()) {
+//                for (i = 0; i < words.length; i++){
+//                    if(!words[i].startsWith(prefix)) {
+//                        prefix = prefix.substring(0, length - j);
+//                        j--;
+//                    }
+//                }
+//            }
+//
+//            return prefix;
+//        }
+//    }
+//    268. Missing Number
+//    DescriptionHintsSubmissionsDiscussSolution
+//    Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+//            Example 1
+//
+//    Input: [3,0,1]
+//    Output: 2
+//    Example 2
+//
+//    Input: [9,6,4,2,3,5,7,0,1]
+//    Output: 8
+//
+//    Note:
+//    Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+    public static void testMissingNumber() {
+//	    int[] nums = new int[] { 9,6,4,2,3,5,7,0,1 };
+//	    int[] nums = new int[] { 3,0,1 };
+	    int[] nums = new int[] { 2 };
+	    System.out.println("Missing number = " + new ArraysStrings().missingNumber(nums));
+	    System.out.println("Missing number = " + new ArraysStrings().missingNumberGauss(nums));
+	    System.out.println("Missing number = " + new ArraysStrings().missingNumberXOR(nums));
+    }
+
+    public int missingNumber(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != i) {
+                return i;
+            }
+        }
+        return nums[nums.length - 1] + 1;
+    }
+
+
+    public int missingNumberGauss(int[] nums) {
+//        int expectedSum = nums.length * (nums.length + 1) / 2;
+//        int sum = 0;
+//        for (int i = 0; i < nums.length; i++) {
+//            sum += nums[i];
+//        }
+//        return expectedSum - sum;
+        int expectedSum = nums.length*(nums.length + 1)/2;
+        int actualSum = 0;
+        for (int num : nums) actualSum += num;
+        return expectedSum - actualSum;
+    }
+    public int missingNumberXOR(int[] nums) {
+        int missing = nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            missing ^= i ^ nums[i];
+        }
+        return missing;
+    }
+
+
+//    Given a sorted integer array where the range of elements are in the inclusive range [lower, upper], return its missing ranges.
+//
+//    For example, given [0, 1, 3, 50, 75], lower = 0 and upper = 99, return ["2", "4->49", "51->74", "76->99"].
+
+    public static void testMissingRanges() {
+//	    int[] nums = new int[] {0, 1, 3, 50, 75};
+//	    int lower = 0, upper = 99;
+	    int[] nums = new int[] { 2147483647};
+	    int lower = 0, upper = 2147483647;
+	    List<String> ranges = new ArraysStrings().findMissingRanges(nums, lower, upper);
+	    System.out.println("Missing ranges = " + Arrays.toString(ranges.toArray()));
+    }
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+        List<String> ranges = new ArrayList<>();
+        int lb = lower - 1;
+        for (int i = 0; i <= nums.length; i++) {
+            int ub = (i == nums.length) ? upper + 1 : nums[i];
+            if (ub - lb >= 2) {
+                ranges.add(addRange(lb + 1, ub - 1));
+            }
+            lb = ub;
+        }
+        return ranges;
+    }
+    private String addRange(int from, int to) {
+	    return (from == to) ? String.valueOf(to) : String.valueOf(from) + "->" + String.valueOf(to);
+    }
 }
 

@@ -395,4 +395,71 @@ public class GoogleLeetCode {
         }
         return resultList;
     }
+
+//    4. Median of Two Sorted Arrays
+//            DescriptionHintsSubmissionsDiscussSolution
+//    There are two sorted arrays nums1 and nums2 of size m and n respectively.
+//
+//    Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+//
+//    Example 1:
+//    nums1 = [1, 3]
+//    nums2 = [2]
+//
+//    The median is 2.0
+//
+//    Example 2:
+//    nums1 = [1, 2]
+//    nums2 = [3, 4]
+//    The median is (2 + 3)/2 = 2.5
+
+    public static void testRunningMedian() {
+        int[] nums1 = new int[] {2};
+        int[] nums2 = new int[] {};
+        System.out.println("Median = " + new GoogleLeetCode().findMedianSortedArrays(nums1, nums2));
+    }
+
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+         if (nums1.length == 0 && nums2.length == 0) return 0;
+         if (nums1.length == 0 && nums2.length > 0){
+             return (double)(nums2[nums2.length - 1] + nums2[0]) / 2;
+         }
+         if (nums2.length == 0 && nums1.length > 0){
+             return (double)(nums1[nums1.length - 1] + nums1[0]) / 2;
+         }
+        // if (nums2.length == 0) return nums1[0];
+        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(1, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(1);
+        int[] larger = nums1.length > nums2.length ? nums1 : nums2;
+        int[] smaller = nums1.length > nums2.length ? nums2 : nums1;
+        int i = 0;
+        while(i < smaller.length) {
+            if (smaller[i] < larger[i]) {
+                minHeap.add(smaller[i]);
+                maxHeap.add(larger[i]);
+            } else {
+                minHeap.add(larger[i]);
+                maxHeap.add(smaller[i]);
+            }
+            i++;
+        }
+        while(i < larger.length) {
+            if (minHeap.size() == 0 || larger[i] < minHeap.peek()) {
+                minHeap.add(larger[i]);
+            } else {
+                maxHeap.add(larger[i]);
+            }
+            i++;
+        }
+        double median = maxHeap.size() > 0 ? maxHeap.peek() : minHeap.peek();
+        if (nums1.length == nums2.length) {
+            median = (double) (maxHeap.peek() + minHeap.peek()) / 2;
+        }
+        return median;
+    }
 }

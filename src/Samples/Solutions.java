@@ -63,7 +63,12 @@ public class Solutions {
 //		AmazonLeetCode.testMaxStack();
 //		AmazonLeetCode.testMergeTwoSortedList();
 //		AmazonLeetCode.testReverseLinkedList();
-		ArraysStrings.testReverseVowels();
+//		ArraysStrings.testReverseVowels();
+//		ArraysStrings.testRemoveDuplicateLetters();
+//		GoogleLeetCode.testRunningMedian();
+//		ArraysStrings.testMissingNumber();
+//		ArraysStrings.testMissingRanges();
+		FacebookLeetCode.testWordSearch();
 	}
 
 }
