@@ -528,6 +528,7 @@ public class ArraysStrings {
 	}
 
 	public String reverseVowels(String s) {
+
 		Map<Character, Boolean> vowelsMap = new HashMap<>();
 		vowelsMap.put('a', true);
 		vowelsMap.put('e', true);
@@ -728,5 +729,268 @@ public class ArraysStrings {
     private String addRange(int from, int to) {
 	    return (from == to) ? String.valueOf(to) : String.valueOf(from) + "->" + String.valueOf(to);
     }
+
+//    260. Single Number III
+//	Given an array of numbers nums, in which exactly two elements appear only once and all the other elements appear exactly twice. Find the two elements that appear only once.
+//	For example:
+//	Given nums = [1, 2, 1, 3, 2, 5], return [3, 5].
+//	Note:
+//	The order of the result is not important. So in the above example, [5, 3] is also correct.
+//	Your algorithm should run in linear runtime complexity. Could you implement it using only constant space complexity?
+	public static void testSingleNumber() {
+		int[] nums = new int[] { 1, 2, 1, 3, 2, 5 };
+
+		int[] singleNums = new ArraysStrings().singleNumber(nums);
+		System.out.println("Single numbers = " + Arrays.toString(singleNums));
+		int[] nums1 = new int[] { 0, 0, 1, 2 };
+		int[] singleNumBits = new ArraysStrings().singleNumberBits(nums1);
+		System.out.println("Single numbers = " + Arrays.toString(singleNumBits));
+	}
+	public int[] singleNumber(int[] nums) {
+		Set<Integer> set = new HashSet<>();
+		for (int i = 0; i < nums.length; i++) {
+			if (set.contains(nums[i])) {
+				set.remove(nums[i]);
+			} else {
+				set.add(nums[i]);
+			}
+		}
+		int[]retArry = new int[set.size()];
+		for (int i = 0; i < set.size(); i++) {
+			retArry[i] = (int)set.toArray()[i];
+		}
+		return retArry;
+	}
+	public int[] singleNumberBits(int[] nums) {
+		int firstSingle = 0;
+		int secondSingle = 0;
+		for (int i = 0; i < nums.length; i++) {
+			secondSingle |= firstSingle & nums[i];
+			firstSingle ^= nums[i];
+		}
+
+		return new int[] { secondSingle, firstSingle ^ secondSingle };
+	}
+//	38. Count and Say
+//    The count-and-say sequence is the sequence of integers with the first five terms as following:
+//            1.     1
+//            2.     11
+//            3.     21
+//            4.     1211
+//            5.     111221
+//            1 is read off as "one 1" or 11.
+//            11 is read off as "two 1s" or 21.
+//            21 is read off as "one 2, then one 1" or 1211.
+//    Given an integer n, generate the nth term of the count-and-say sequence.
+    public static void testCountAndSay() {
+	    System.out.println(" Count and say = " + new ArraysStrings().countAndSay(3));
+    }
+    public String countAndSay(int n) {
+        String result = "1";
+        for (int i = 1; i < n; i++) {
+            String prev = result;
+            result = "";
+            char temp = prev.charAt(0);
+            int count = 1;
+            for (int j = 1; j < prev.length(); j++) {
+                if(prev.charAt(j) == temp) {
+                    count++;
+                } else {
+                    result = result + count + temp;
+                    temp = prev.charAt(j);
+                    count = 1;
+                }
+            }
+            result = result + count + temp;
+        }
+        return result;
+    }
+
+    public static void testMaxProfit() {
+	    int[] prices = new int[] { 1,4,5,4,2 };
+	    int profit = new ArraysStrings().maxProfit(prices);
+	    System.out.println("Max profit = " + profit);
+    }
+    public int maxProfit(int[] prices) {
+	    if (prices.length < 2) return 0;
+        int minProfit = prices[0];
+        int maxProfit = Integer.MIN_VALUE;
+        for (int i = 0; i < prices.length; i++) {
+            int currentProfit = prices[i] - minProfit;
+            maxProfit = Math.max(maxProfit, currentProfit);
+            minProfit = Math.min(minProfit, prices[i]);
+        }
+        return maxProfit;
+    }
+
+    public static void testSubsets() {
+        char[] input = new char[] { 'a', 'b', 'c' };
+        ArrayList<ArrayList<Character>>  allSubsets = new ArraysStrings().subsets(input);
+        System.out.println("Subsets = " + allSubsets.toString());
+
+        int[] inputInts = new int[] { 1, 2, 3 };
+        List<List<Integer>>  allIntSubsets = new ArraysStrings().subsets(inputInts);
+        System.out.println("Subsets = " + allIntSubsets.toString());
+	}
+
+//    public List<List<Integer>> subsets(int[] nums) {
+    public ArrayList<ArrayList<Character>>  subsets(char[] input) {
+        return getAllSubsets(input, 0);
+    }
+    public ArrayList<ArrayList<Character>> getAllSubsets(char[] input, int index) {
+	    ArrayList<ArrayList<Character>> allSubsets;
+	    if (input.length == index) {
+	        allSubsets = new ArrayList<>();
+	        allSubsets.add(new ArrayList<>());
+        } else {
+	        allSubsets = getAllSubsets(input, index + 1);
+	        Character ch = input[index];
+	        ArrayList<ArrayList<Character>> moreSubsets = new ArrayList<>();
+	        for(ArrayList list : allSubsets) {
+	            ArrayList<Character> newList = new ArrayList<>();
+	            newList.addAll(list);
+	            newList.add(ch);
+	            moreSubsets.add(newList);
+            }
+            allSubsets.addAll(moreSubsets);
+        }
+	    return allSubsets;
+    }
+
+    public List<List<Integer>>  subsets(int[] input) {
+        return getAllSubsets(input, 0);
+    }
+    public List<List<Integer>> getAllSubsets(int[] input, int index) {
+        List<List<Integer>> allSubsets;
+        if (input.length == index) {
+            allSubsets = new ArrayList<>();
+            allSubsets.add(new ArrayList<>());
+        } else {
+            allSubsets = getAllSubsets(input, index + 1);
+            Integer item = input[index];
+            ArrayList<ArrayList<Integer>> moreSubsets = new ArrayList<>();
+            for(List list : allSubsets) {
+                ArrayList<Integer> newList = new ArrayList<>();
+                newList.addAll(list);
+                newList.add(item);
+                moreSubsets.add(newList);
+            }
+            allSubsets.addAll(moreSubsets);
+        }
+        return allSubsets;
+    }
+
+//    153. Find Minimum in Rotated Sorted Array
+//    DescriptionHintsSubmissionsDiscussSolution
+//    Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+//            (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+//    Find the minimum element.
+//    You may assume no duplicate exists in the array.
+    public static void testFindMinInRotatedArray() {
+        int[] nums = new int[] {4, 5, 6, 7, 8, 0, 1, 2, 3};
+//        int[] nums = new int[] { 0, 1, 2, 4, 5, 6, 7 };
+        System.out.println("Min in sorted array = " + new ArraysStrings().findMin(nums));
+    }
+
+    public int findMin(int[] nums) {
+	    int left = 0, right = nums.length -1;
+	    while (left < right && nums[left] >= nums[right]) {
+	        int middle = (left + right) / 2;
+	        if (nums[middle] > nums[right]) {
+	            left = middle + 1;
+            } else {
+	            right = middle;
+            }
+        }
+        return nums[left];
+    }
+    public int findMin(int[] nums, int left, int right) {
+	    if (left > right) return -1;
+	    int middle = left + (right - left) / 2;
+	    if (nums[middle] > nums[right]) {
+	        return findMin(nums, middle, right);
+        } else {
+            return findMin(nums, left, middle - 1);
+
+        }
+    }
+
+//    17. Letter Combinations of a Phone Number
+//	DescriptionHintsSubmissionsDiscussSolution
+//	Given a digit string, return all possible letter combinations that the number could represent.
+//	A mapping of digit to letters (just like on the telephone buttons) is given below.
+//	Input:Digit string "23"
+//	Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+	public static void testLetterCombinations() {
+		System.out.println("Test letter combinations = " + new ArraysStrings().letterCombinations("23"));
+	}
+	private static final String[] t9Chars = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+
+	public List<String> letterCombinations(String digits) {
+		List<String> results = new ArrayList<>();
+		combinations("", digits, 0, results);
+		return results;
+	}
+	private void combinations(String prefix, String digits, int index, List<String> results) {
+		if (index == digits.length()) {
+			results.add(prefix);
+			return;
+		}
+		String digitLetters = t9Chars[digits.charAt(index) - '0'];
+		for (int i = 0; i < digitLetters.length(); i++) {
+			combinations(prefix + digitLetters.charAt(i), digits, index + 1, results);
+		}
+	}
+
+//	Intersection of Two Arrays II
+//	Given two arrays, write a function to compute their intersection.
+//
+//			Example:
+//	Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2, 2].
+//
+//	Note:
+//	Each element in the result should appear as many times as it shows in both arrays.
+//	The result can be in any order.
+//	Follow up:
+//	What if the given array is already sorted? How would you optimize your algorithm?
+//	What if nums1's size is small compared to nums2's size? Which algorithm is better?
+//	What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+	public static void testIntersectionArray() {
+//		int[] nums1 = new int[] {1,2,2,1};
+//		int[] nums2 = new int[] {3,2,2};
+		int[] nums1 = new int[] {3,1,2};
+		int[] nums2 = new int[] {1,3};
+		int[] array = new ArraysStrings().intersect(nums1, nums2);
+		System.out.println("Intersection array = " + Arrays.toString(array));
+	}
+	public int[] intersect(int[] nums1, int[] nums2) {
+		if(nums1.length < nums2.length) {
+			return intersect(nums2, nums1);
+		}
+		Arrays.sort(nums1);
+		Arrays.sort(nums2);
+		int p = 0, q = 0;
+		ArrayList<Integer> list = new ArrayList<>();
+		while(p < nums1.length && q < nums2.length) {
+			if (nums1[p] < nums2[q]) {
+				p++;
+			} else {
+				if (nums1[p] > nums2[q]) {
+					q++;
+				} else {
+					list.add(nums1[p]);
+					p++;
+					q++;
+				}
+			}
+		}
+
+		int[] result = new int[list.size()];
+		for (int i = 0; i < list.size() ; i++) {
+			result[i] = list.get(i);
+		}
+		return result;
+	}
 }
 

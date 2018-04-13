@@ -1,5 +1,9 @@
 package Samples;
 
+import apple.laf.JRSUIUtils;
+
+import java.util.ArrayList;
+
 public class Solutions {
 
 	public static void main(String[] args) {
@@ -68,7 +72,55 @@ public class Solutions {
 //		GoogleLeetCode.testRunningMedian();
 //		ArraysStrings.testMissingNumber();
 //		ArraysStrings.testMissingRanges();
-		FacebookLeetCode.testWordSearch();
+//		FacebookLeetCode.testWordSearch();
+//		Trees.testTrimBST();
+//		Maths.testUglyNumber();
+//		Maths.testHappyNumber();
+//		ArraysStrings.testSingleNumber();
+//		Trees.testlowestCommonAncestor();
+//		ArraysStrings.testCountAndSay();
+//		ArraysStrings.testMaxProfit();
+//		ArraysStrings.testSubsets();
+//		Maths.testTwoSum();
+//		ArraysStrings.testFindMinInRotatedArray();
+//		Trie.testTrie();
+//		ArraysStrings.testLetterCombinations();
+//		FacebookLeetCode.testWordSearchTrie();
+//		Trie.testWordBreak();
+//		FacebookLeetCode.testWordBreak();
+//		GoogleLeetCode.testBurstBalloons();
+//		GoogleLeetCode.testMinimumTotal();
+//		Trees.testIsSymmetric();
+//		Trees.testHasSum();
+//		Trees.testMaxValue();
+//		Trees.testFindMax();
+//		FacebookLeetCode.testAddBinary();
+//		Maths.testLastRemaining();
+//		FacebookLeetCode.testMultiplyStrings();
+//		Trees.testBinaryTreePaths();
+//		ArraysStrings.testIntersectionArray();
+//		DynamicProgramming.testNumDecoding();
+//		FacebookLeetCode.testMaxSizeSubarray();
+//		FacebookLeetCode.testBadVersion();
+//		Microsoft.testAToi();
+//		Microsoft.testSetZeroes();
+//		Microsoft.testLongestPalindrome();
+//		Microsoft.testGroupAnagrams();
+//		Microsoft.testMergeKLists();
+//		Microsoft.testInorderTraversal();
+//		Microsoft.testLevelOrder();
+		Matrix.testSearchMatrix();
+//        LinkedInLeetCode.testNextGreatestLetter();
+//        LinkedInLeetCode.testfindSecondMinimumValue();
+//        LinkedInLeetCode.testWordDistance();
+//        LinkedInLeetCode.testPaintHouse();
+//        UberLeetCode.testConvertToTile();
+//        UberLeetCode.testTitleToNumber();
+//        UberLeetCode.testCopyRandomList();
+//        Microsoft.testSortColors();
+//        Microsoft.testNumberToWords();
+//        Microsoft.testRemoveDuplicates();
+//        Microsoft.testSearchRotatedArray();
 	}
 
 }

@@ -239,7 +239,7 @@ public class Trees {
         root.right = new TreeNode(3);
 //        root.right.left = new TreeNode(2);
 //        root.right.right = new TreeNode(4);
-//        root.right.left.left = new TreeNode(3);
+//        root.right.left.left = new new TreeNode(1);TreeNode(3);
 //        root.right.left.right = new TreeNode(1);
 //        root.right.right = new TreeNode(5);
         Trees trees = new Trees();
@@ -463,4 +463,287 @@ public class Trees {
 //        }
 //        return root;
 //    }
+
+//    669. Trim a Binary Search Tree
+//    Given a binary search tree and the lowest and highest boundaries as L and R, trim the tree so that all its elements lies in [L, R] (R >= L). You might need to change the root of the tree, so the result should return the new root of the trimmed binary search tree.
+//            Example 1:
+//    Input:
+//            1
+//            / \
+//            0   2
+//    L = 1
+//    R = 2
+//    Output:
+//            1
+//            \
+//            2
+
+    public static void testTrimBST() {
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(0);
+        root.right = new TreeNode(4);
+        root.left.right = new TreeNode(2);
+        root.left.right.left = new TreeNode(1);
+//        TreeNode root = new TreeNode(2);
+//        root.left = new TreeNode(1);
+//        root.right = new TreeNode(3);
+        Trees trees = new Trees();
+        System.out.println(trees.serializeBST(root));
+        TreeNode node = trees.trimBST(root, 3, 4);
+        System.out.println(trees.serializeBST(node));
+    }
+
+    public TreeNode trimBST(TreeNode root, int L, int R) {
+        if (root == null) return null;
+        root.left = trimBST(root.left, L, R);
+        root.right = trimBST(root.right, L, R);
+        if (root.val < L || root.val > R) {
+            if (root.left != null && root.left.val >= L && root.left.val <= R) {
+                root = root.left;
+            } else if (root.right != null && root.right.val >= L && root.right.val <= R) {
+                root = root.right;
+            } else {
+                root = null;
+            }
+        }
+        return root;
+    }
+
+    public static void testlowestCommonAncestor() {
+        TreeNode root = new TreeNode(6);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(8);
+        root.left.left = new TreeNode(1);
+        TreeNode p = root.left.left ;
+        root.left.right = new TreeNode(4);
+        root.left.right.left = new TreeNode(3);
+        root.left.right.right = new TreeNode(5);
+        TreeNode q = null;//root.left.right.right;
+        root.right.left = new TreeNode(7);
+        root.right.right = new TreeNode(9);
+
+        System.out.println("LCA = " + new Trees().lowestCommonAncestor(root, p, q).val);
+    }
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || p == root || q == root) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) {
+            return root;
+        } else {
+            return left != null ? left : right;
+        }
+    }
+
+    public static void testIsSymmetric() {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+//        root.right = new TreeNode(2);
+////        root.left.left = new TreeNode(3);
+//        root.left.right = new TreeNode(3);
+////        root.right.left = new TreeNode(4);
+//        root.right.right = new TreeNode(3);
+        System.out.println(("Is Symmetric = " + new Trees().isSymmetric(root)));
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return false;
+        if ((root.left != null && root.right == null) || (root.left == null && root.right != null)) return false;
+        return isSymmetric(root.left, root.right);
+    }
+
+    public boolean isSymmetric(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left.val != right.val) return false;
+        if ((left.left != null && right.right == null) || (left.left == null && right.right != null)) return false;
+        if ((left.right != null && right.left == null) || (left.right == null && right.left != null)) return false;
+        return isSymmetric(left.left, right.right) && isSymmetric(left.right, right.left);
+    }
+
+    public static void testHasSum() {
+//        [5,4,8,11,null,13,4,7,2,null,null,null,1]
+//        22
+        TreeNode root = new TreeNode(5);
+        root.left = new TreeNode(4);
+        root.right = new TreeNode(8);
+        root.left.left = new TreeNode(11);
+//        root.left.right = new TreeNode(3);
+        root.right.left = new TreeNode(13);
+        root.right.right = new TreeNode(4);
+        root.right.right.right = new TreeNode(1);
+        root.left.left.left = new TreeNode(7);
+        root.left.left.right = new TreeNode(2);
+        System.out.println(("Has path sum = " + new Trees().hasPathSum(root, 22)));
+    }
+
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null) return false;
+        if (root.left == null && root.right == null && sum == 0) {
+            return true;
+        }
+        sum -= root.val;
+        if (sum == 0) return true;
+        return hasPathSum(root.left, sum) || hasPathSum(root.right, sum);
+    }
+/*
+    Write a function to determine the max value in a binary tree (not a binary search tree).
+            3
+            / \
+            6   10
+            / \  | \
+            4   2 7  3
+    maxValue -> 10
+            */
+
+    int maxValue = Integer.MIN_VALUE;
+    public static void testMaxValue() {
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(6);
+        root.right = new TreeNode(10);
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(2);
+        root.right.left = new TreeNode(7);
+        root.right.right = new TreeNode(3);
+        Trees trees = new Trees();
+        trees.findMaxValue(root);
+        System.out.println(("Max value = " + trees.maxValue));
+    }
+
+    private void findMaxValue(TreeNode root) {
+        if (root == null) return;
+        maxValue = Math.max(root.val, maxValue);
+        if (root.left != null) {
+            findMaxValue(root.left);
+        }
+        if (root.right != null) {
+            findMaxValue(root.right);
+        }
+    }
+
+    /*
+Write a function to determine the value of the maximum valued path from root to a leaf.
+
+    *3
+   / \
+  6   *10
+ / \  | \
+4   2 *7 3
+
+maxValuePathRootToLeaf -> 20
+
+   *3
+   / \
+  6  *-10
+ / \  | \
+4   2 7  *29
+
+maxValuePathRootToLeaf -> 22
+
+   *3
+   / \
+  6  *10
+ / \  | \
+4   2 7 *3
+      |
+     -14
+maxValuePathRootToLeaf -> 16
+ */
+
+/*
+    *-3
+    / \
+  *-6  -10
+  / \  | \
+-4 *-2 -7 0
+maxValuePathRootToLeaf -> -11
+*/
+
+    private int maxVal = Integer.MIN_VALUE;
+
+    public static void testFindMax() {
+        TreeNode root = new TreeNode(-3);
+        root.left = new TreeNode(-6);
+        root.right = new TreeNode(-10);
+        root.left.left = new TreeNode(-4);
+        root.left.right = new TreeNode(-2);
+        root.right.left = new TreeNode(-7);
+        root.right.right = new TreeNode(0);
+        Trees trees = new Trees();
+//        trees.findMax(root);
+        trees.maxPathSum(root);
+        System.out.println(("Max value = " + trees.maxVal));
+//        System.out.println(("Max path sum = " + trees.maxSum));
+    }
+
+    public int findMax(TreeNode node) {
+        this.maxVal = Integer.MIN_VALUE;
+        this.process(node,0);
+        return maxVal;
+    }
+
+    private void process(TreeNode node, int pathVal) {
+        int curPathVal = node.val + pathVal;
+
+        if ( node.left == null && node.right == null) {
+            if (curPathVal > maxVal) {
+                maxVal = curPathVal;
+            }
+        }
+
+        if (node.left != null ) {
+            process (node.left,curPathVal);
+        }
+
+        if (node.right != null ) {
+            process (node.right,curPathVal);
+        }
+    }
+
+    int maxSum;
+    public int maxPathSum(TreeNode root) {
+        maxSum = Integer.MIN_VALUE;
+        findMaxPathSum(root);
+        return maxSum;
+    }
+    private int findMaxPathSum(TreeNode root) {
+        if(root == null) return 0;
+        int leftSum = findMax(root.left);
+        int rightSum = findMax(root.right);
+        maxSum = Math.max(root.val + leftSum + rightSum, maxSum);
+        int ret = root.val + Math.max(leftSum, rightSum);
+        return ret > 0 ? ret : 0;
+    }
+
+
+    public static void testBinaryTreePaths() {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.right = new TreeNode(5);
+        Trees trees = new Trees();
+        List<String> paths = trees.binaryTreePaths(root);
+        System.out.println("Binary paths = " + paths.toString());
+    }
+
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> paths = new ArrayList<>();
+        String path = "";
+        if (root != null) binaryTreePaths(root, paths, path);
+        return paths;
+    }
+
+    private void binaryTreePaths(TreeNode root, List<String> paths, String path) {
+        if(root.left != null) {
+            binaryTreePaths(root.left, paths, path + root.val + "->");
+        }
+        if(root.right != null) {
+            binaryTreePaths(root.right, paths, path + root.val + "->");
+        }
+        if (root.left == null && root.right == null) {
+            paths.add(path + root.val);
+        }
+    }
+
 }

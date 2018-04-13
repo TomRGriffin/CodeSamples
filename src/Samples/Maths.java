@@ -1,7 +1,6 @@
 package Samples;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -147,4 +146,143 @@ public class Maths {
 	int rand(int lower, int higher) {
 		return lower + (int) (Math.random() * (higher - lower + 1));
 	}
+
+	public static void testUglyNumber(){
+		System.out.println("Is Ugly Number = " + new Maths().isUgly(6));
+	}
+	public boolean isUgly(int num) {
+		for (int i=2; i<6 && num>0; i++)
+			while (num % i == 0)
+				num /= i;
+		return num == 1;
+	}
+	public static void testHappyNumber(){
+		System.out.println("Is 6 Happy Number = " + new Maths().isHappy(6));
+		System.out.println("Is 9 Happy Number = " + new Maths().isHappy(9));
+		System.out.println("Is 7 Happy Number = " + new Maths().isHappy(7));
+		System.out.println("Is 19 Happy Number = " + new Maths().isHappy(19));
+//		System.out.println("Is 169 Happy Number = " + new Maths().isHappy(169));
+	}
+	public boolean isHappy(int num) {
+        if (num == 1) return true;
+        if (num < 7) return false;
+		int sum = 0;
+		while(num > 0) {
+			int digit = num % 10;
+			sum += digit * digit;
+			num /= 10;
+			if (sum == 4 && num == 0) {
+				return false;
+			} else if (sum == 1 && num == 0) {
+				return true;
+			} else if (num == 0){
+				num = sum;
+				sum = 0;
+			}
+		}
+		return false;
+	}
+
+//	Two Sum
+//	Difficulty:Easy
+//
+//	Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+//
+//	You may assume that each input would have exactly one solution, and you may not use the same element twice.
+//
+//			Example:
+//	Given nums = [2, 7, 11, 15], target = 9,
+//
+//	Because nums[0] + nums[1] = 2 + 7 = 9,
+//			return [0, 1].
+//	150,24,79,50,88,345,3]
+//			200
+	public static void testTwoSum() {
+		int[] nums = new int[] {150,24,79,50,88,345,3};
+		int[] indices = new Maths().twoSum(nums, 200);
+		System.out.println("Sum pair = " + Arrays.toString(indices));
+	}
+	public int[] twoSum(int[] nums, int target) {
+		Map<Integer, Integer> map = new HashMap<>();
+		for (int i = 0; i < nums.length ; i++) {
+			if (map.containsKey(target - nums[i])) {
+				int index = map.get(target - nums[i]);
+				return new int [] {index, i};
+			} else {
+				map.put(nums[i], i);
+			}
+		}
+		return new int[0];
+	}
+
+	public static void testLastRemaining() {
+//		System.out.println("Last remaining = " + new Maths().lastRemaining(4));
+//		System.out.println("Last remaining = " + new Maths().lastRemaining(6));
+//		System.out.println("Last remaining = " + new Maths().lastRemaining(9));
+		System.out.println("Last remaining = " + new Maths().lastRemaining(10));
+	}
+	class LinkedNode {
+		int val;
+		LinkedNode(int val) {
+			this.val = val;
+		}
+		LinkedNode next;
+	}
+	public int lastRemaining(int n) {
+		int[] nums = new int[n];
+		int[] values = new int[n];
+		for (int i = 0; i < n; i++) {
+			nums[i] = i + 1;
+			values[i] = i + 1;
+		}
+
+		boolean oddLoop = true;
+		int bound = values.length;
+		while (bound > 1) {
+			int i = 0;
+			for (int j = 1; j < bound; j += oddLoop ? 2 : 1) {
+				values[i++] = values[j];
+			}
+			oddLoop = !oddLoop;
+			bound = i;
+//			if (bound > 1 && (bound % 2 == 0)) bound++;
+		}
+		return values[0];
+//		int[] dp = new int[n];
+//		for (int i = 1; i <= n; i++) {
+//			dp[i - 1] = i;
+//		}
+//		boolean oddLoop = true;
+//		while(n > 1) {
+//			int j = 0;
+//			for (int i = 1; i < dp.length; i += 2) {
+//				if (oddLoop) {
+//					dp[j] = Math.max(dp[i - 1], dp[i]);
+//				} else {
+//					dp[j] = Math.min(dp[i - 1], dp[i]);
+//				}
+//				j++;
+//			}
+//			oddLoop = !oddLoop;
+//			n /= 2;
+//			if (n > 1 && (n % 2 != 0)) n++;
+//		}
+//		return dp[0];
+
+//		boolean left = true;
+//		int remaining = n;
+//		int step = 1;
+//		int head = 1;
+//		while (remaining > 1) {
+//			if (left || remaining % 2 ==1) {
+//				head = head + step;
+//			}
+//			remaining = remaining / 2;
+//			step = step * 2;
+//			left = !left;
+//		}
+//		return head.val;
+//		return  0;
+	}
 }
+

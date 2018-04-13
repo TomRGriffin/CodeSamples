@@ -462,4 +462,87 @@ public class GoogleLeetCode {
         }
         return median;
     }
+
+
+//    312. Burst Balloons
+//    Given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If the you burst balloon i you will get nums[left] * nums[i] * nums[right] coins. Here left and right are adjacent indices of i. After the burst, the left and right then becomes adjacent.
+//    Find the maximum coins you can collect by bursting the balloons wisely.
+//    Note:
+//            (1) You may imagine nums[-1] = nums[n] = 1. They are not real therefore you can not burst them.
+//            (2) 0 ≤ n ≤ 500, 0 ≤ nums[i] ≤ 100
+//    Example:
+//    Given [3, 1, 5, 8]
+//    Return 167
+//    nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
+//    coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
+    public static void testBurstBalloons() {
+        int[] nums = new int[] { 3, 1, 5, 8 };
+        System.out.println("Max coins = " + new GoogleLeetCode().maxCoins(nums));
+    }
+    public int maxCoins(int[] nums) {
+        int[]iNums = new int[nums.length + 2];
+        int n = 1;
+        for (int x : nums) if (x > 0) iNums[n++] = x;
+        iNums[0] = 1;
+        iNums[n++] = 1;
+        int[][] memo = new int[n][n];
+        int sum = maxCoins(iNums, memo, 0, n - 1);
+        return sum;
+    }
+    public int maxCoins(int[] nums, int[][] memo, int left, int right) {
+        if (left + 1 == right)  {
+            return 0;
+        }
+        if (memo[left][right] > 0) {
+            return memo[left][right];
+        }
+        int sum = 0;
+
+        for (int i = left + 1; i < right; i++ ) {
+            int currentProd = nums[left] * nums[i] * nums[right];
+            int leftProd = maxCoins(nums, memo, left, i);
+            int rightProd = maxCoins(nums, memo, i, right);
+            sum = Math.max(sum, currentProd +  leftProd + rightProd);
+        }
+        memo[left][right] = sum;
+        return  sum;
+    }
+
+    public static void testMinimumTotal() {
+        List<List<Integer>> triangle = new ArrayList<>();
+        List<Integer> angle = new ArrayList<>();
+        angle.add(1);
+        triangle.add(angle);
+        List<Integer> angle2 = new ArrayList<>();
+        angle2.add(2);
+        angle2.add(3);
+        triangle.add(angle2);
+        List<Integer> angle3 = new ArrayList<>();
+        angle3.add(4);
+        angle3.add(5);
+        angle3.add(6);
+        triangle.add(angle3);
+
+        List<Integer> angle4 = new ArrayList<>();
+        angle4.add(10);
+        angle4.add(9);
+        angle4.add(7);
+        angle4.add(8);
+        triangle.add(angle4);
+        System.out.println("Minimum sum = " + new GoogleLeetCode().minimumTotal(triangle));
+    }
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int[] A = new int[triangle.size() + 1];
+//        A[0] = 1;
+        for (int i = triangle.size() - 1; i >= 0; i--) {
+            List<Integer> angle = triangle.get(i);
+            for (int j = 0; j < angle.size(); j++) {
+                System.out.println("A[" + j + "] = " + A[j] + " angle.get(" + j + ") = " + angle.get(j));
+                System.out.println(("A[] = " + Arrays.toString(A)));
+                A[j] = angle.get(j) + Math.min(A[j], A[j + 1]);
+                System.out.println(("A[] = " + Arrays.toString(A)));
+            }
+        }
+        return A[0];
+    }
 }
