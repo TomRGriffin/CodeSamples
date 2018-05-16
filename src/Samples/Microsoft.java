@@ -519,7 +519,76 @@ public class Microsoft {
         return false;
     }
 
+    public static  void testLengthOfLIS() {
+        int[] nums = new int[] { 10, 9, 2, 5, 3, 7, 101};
+        int length = new Microsoft().lengthOfLIS(nums);
+    }
     public int lengthOfLIS(int[] nums) {
+        if (nums.length == 0) return 0;
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int maxAns = Integer.MIN_VALUE;
+        int maxVal = 0;
+        for (int i = 1; i < nums.length ; i++) {
+            maxVal = 0;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    maxVal = Math.max(maxVal, dp[j]);
+                }
+            }
+            dp[i] = maxVal + 1;
+            maxAns = Math.max(maxAns, dp[i]);
+        }
+        return maxAns;
+    }
 
+    public static void testTicTacToe() {
+        TicTacToe ticTacToe = new TicTacToe(3);
+        int winningPlayer = 0;
+        winningPlayer = ticTacToe.move(0, 1, 1);
+        winningPlayer = ticTacToe.move(0, 0, 2);
+        winningPlayer = ticTacToe.move(0, 2, 1);
+        winningPlayer = ticTacToe.move(1, 0, 2);
+        winningPlayer = ticTacToe.move(2, 2, 1);
+        winningPlayer = ticTacToe.move(2, 0, 2);
+        System.out.println("Winning player = " + winningPlayer);
+    }
+    public static class TicTacToe {
+
+        private int[] rows;
+        private int[] cols;
+        private int size;
+        private int diagonal;
+        private int anti_diagonal;
+        /** Initialize your data structure here. */
+        public TicTacToe(int n) {
+            size = n;
+            rows = new int[n];
+            cols = new int[n];
+        }
+
+        /** Player {player} makes a move at ({row}, {col}).
+         @param row The row of the board.
+         @param col The column of the board.
+         @param player The player, can be either 1 or 2.
+         @return The current winning condition, can be either:
+         0: No one wins.
+         1: Player 1 wins.
+         2: Player 2 wins. */
+        public int move(int row, int col, int player) {
+            int add = player == 1 ? 1 : -1;
+            if(col == row){
+                diagonal += add;
+            }
+            if(col == size - 1 - row){
+                anti_diagonal += add;
+            }
+            rows[row] += add;
+            cols[col] += add;
+            if(Math.abs(rows[row]) == size || Math.abs(cols[col]) == size|| Math.abs(diagonal) == size || Math.abs(anti_diagonal) == size){
+                return player;
+            }
+            return 0;
+        }
     }
 }

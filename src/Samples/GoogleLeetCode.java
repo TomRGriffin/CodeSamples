@@ -414,26 +414,61 @@ public class GoogleLeetCode {
 //    The median is (2 + 3)/2 = 2.5
 
     public static void testRunningMedian() {
-        int[] nums1 = new int[] {2};
-        int[] nums2 = new int[] {};
-        System.out.println("Median = " + new GoogleLeetCode().findMedianSortedArrays(nums1, nums2));
+        int[] nums1 = new int[] {1, 2};
+        int[] nums2 = new int[] {3, 4};
+        System.out.println("Median = " + new GoogleLeetCode().findMedianSortedArraysQueue(nums1, nums2));
     }
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int len = nums1.length + nums2.length;
+        int[] nums = new int[len];
+        int i = 0, j = 0;
+
+        int k = 0;
+        while ((i < nums1.length) || (j < nums2.length)) {
+            if (i >= nums1.length) {
+                while(j < nums2.length) {
+                    nums[k++] = nums2[j++];
+                }
+                break;
+            }
+            if(j >= nums2.length) {
+                while (i < nums1.length) {
+                    nums[k++] = nums1[i++];
+                }
+                break;
+            }
+
+            if(nums1[i] < nums2[j]) {
+                nums[k++] = nums1[i++];
+            } else {
+                nums[k++] = nums2[j++];
+            }
+        }
+
+        int mid = (len - 1) / 2;
+        if (len % 2 == 0) {
+            return ((double)nums[mid] + nums[mid + 1]) / 2;
+        } else {
+            return nums[mid];
+        }
+    }
+
+    public double findMedianSortedArraysQueue(int[] nums1, int[] nums2) {
          if (nums1.length == 0 && nums2.length == 0) return 0;
-         if (nums1.length == 0 && nums2.length > 0){
-             return (double)(nums2[nums2.length - 1] + nums2[0]) / 2;
+         if (nums1.length == 0 && nums2.length != 0){
+             return (double)(nums2[(nums2.length - 1) / 2]);
          }
          if (nums2.length == 0 && nums1.length > 0){
-             return (double)(nums1[nums1.length - 1] + nums1[0]) / 2;
+             return (double)(nums1[(nums1.length - 1) / 2]);
          }
-        // if (nums2.length == 0) return nums1[0];
-        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(1, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2 - o1;
-            }
-        });
+//        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(1, new Comparator<Integer>() {
+//            @Override
+//            public int compare(Integer o1, Integer o2) {
+//                return o2 - o1;
+//            }
+//        });
+        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(1, Comparator.reverseOrder());
         PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(1);
         int[] larger = nums1.length > nums2.length ? nums1 : nums2;
         int[] smaller = nums1.length > nums2.length ? nums2 : nums1;
@@ -443,16 +478,8 @@ public class GoogleLeetCode {
                 minHeap.add(smaller[i]);
                 maxHeap.add(larger[i]);
             } else {
-                minHeap.add(larger[i]);
                 maxHeap.add(smaller[i]);
-            }
-            i++;
-        }
-        while(i < larger.length) {
-            if (minHeap.size() == 0 || larger[i] < minHeap.peek()) {
                 minHeap.add(larger[i]);
-            } else {
-                maxHeap.add(larger[i]);
             }
             i++;
         }
@@ -545,4 +572,51 @@ public class GoogleLeetCode {
         }
         return A[0];
     }
+
+    public static void mirrorNAryTree() {
+
+    }
+
+//    Given an array with input - [1,2,3,4,5] , [1,3,4,5,7]
+//    Program should output [1-5],[1-1,3-5,7-7]
+    public static void testArrayRanges() {
+        int[] arr1 = new int[] { 1,2,3,4,5 };
+        int[] arr2 = new int[] { 1,3,4,5,7 };
+        new GoogleLeetCode().arrayRanges(arr1);
+        new GoogleLeetCode().arrayRanges(arr2);
+    }
+
+    private void arrayRanges(int[] arr) {
+        int prev = 0;
+        List<String> resultList = new ArrayList<>();
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] + 1 != arr[i + 1]) {
+                resultList.add(arr[prev] + " - " + arr[i]);
+                prev = i + 1;
+            }
+        }
+        resultList.add(arr[prev] + "-" + arr[arr.length - 1]);
+        System.out.println("range = " + resultList.toString());
+    }
+
+    public static void testMinCoinChange() {
+        int[] arr1 = new int[] { 1, 2, 5 };
+        System.out.println("Min coins = " + new GoogleLeetCode().coinChange(arr1, 11));
+    }
+    int totalCoins = 0;
+    public int coinChange(int[] coins, int amount) {
+        int maxAmount = amount + 1;
+        int [] dp = new int[maxAmount];
+        Arrays.fill(dp, maxAmount);
+        dp[0] = 0;
+        for (int i = 0; i <= amount; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (coins[j] <= i) {
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+
 }

@@ -3,6 +3,7 @@ package Samples;
 import apple.laf.JRSUIUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Solutions {
 
@@ -109,7 +110,7 @@ public class Solutions {
 //		Microsoft.testMergeKLists();
 //		Microsoft.testInorderTraversal();
 //		Microsoft.testLevelOrder();
-		Matrix.testSearchMatrix();
+//		Matrix.testSearchMatrix();
 //        LinkedInLeetCode.testNextGreatestLetter();
 //        LinkedInLeetCode.testfindSecondMinimumValue();
 //        LinkedInLeetCode.testWordDistance();
@@ -121,6 +122,19 @@ public class Solutions {
 //        Microsoft.testNumberToWords();
 //        Microsoft.testRemoveDuplicates();
 //        Microsoft.testSearchRotatedArray();
+//        Microsoft.testLengthOfLIS();
+//		ArraysStrings.testLetterCombinations();
+//		LinkedInLeetCode.testPalindromicSubstrings();
+//		ArraysStrings.testSubsetsPattern();
+//		ArraysStrings.testKthLargest();
+//		ArraysStrings.testLongestSubstringWithTwoDistinctCharacters();
+//		AppleLeetCode.testMaxSquare();
+//		Microsoft.testTicTacToe();
+//		ArraysStrings.testAllPermutations();
+//		GoogleLeetCode.testArrayRanges();
+//		GoogleLeetCode.testMinCoinChange();
+//		FacebookLeetCode.testMinWindowSubstring();
+		FacebookLeetCode.testMeetingRooms();
 	}
 
 }

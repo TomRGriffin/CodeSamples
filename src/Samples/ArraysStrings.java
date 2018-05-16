@@ -1,4 +1,5 @@
 package Samples;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -923,7 +924,8 @@ public class ArraysStrings {
 //	Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 
 	public static void testLetterCombinations() {
-		System.out.println("Test letter combinations = " + new ArraysStrings().letterCombinations("23"));
+//		System.out.println("Test letter combinations = " + new ArraysStrings().letterCombinations("23"));
+		System.out.println("Test letter combinations FiFo= " + new ArraysStrings().letterCombinationsFIFO("23"));
 	}
 	private static final String[] t9Chars = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
 
@@ -941,6 +943,21 @@ public class ArraysStrings {
 		for (int i = 0; i < digitLetters.length(); i++) {
 			combinations(prefix + digitLetters.charAt(i), digits, index + 1, results);
 		}
+	}
+	public List<String> letterCombinationsFIFO(String digits) {
+		if (digits == null || digits.isEmpty()) return null;
+		LinkedList<String> queue = new LinkedList<>();
+		queue.add("");
+		for (int i = 0; i < digits.length(); i++) {
+			String letters = t9Chars[Character.getNumericValue(digits.charAt(i))];
+			while (i == queue.peek().length()) {
+				String result = queue.poll();
+				for (int j = 0; j < letters.length(); j++) {
+					queue.add(result + String.valueOf(letters.charAt(j)));
+				}
+			}
+		}
+		return queue;
 	}
 
 //	Intersection of Two Arrays II
@@ -992,5 +1009,152 @@ public class ArraysStrings {
 		}
 		return result;
 	}
+
+	public static void testSubsetsPattern() {
+	    int[] nums = new int[] { 1, 3, 2};
+        List<List<Integer>> subsets = new ArraysStrings().getAllSubsets(nums);
+        System.out.println("Subsets = " + subsets.toString());
+    }
+
+    public List<List<Integer>> getAllSubsets(int[] nums) {
+        List<List<Integer>> lists = new ArrayList<>();
+        Arrays.sort(nums);
+        getAllSubsets(nums, new ArrayList<>(), 0, lists);
+        return lists;
+    }
+    private void getAllSubsets(int[] nums, ArrayList<Integer> tempList, int index, List<List<Integer>> results) {
+        results.add(new ArrayList<>(tempList));
+        
+        for (int i = index; i < nums.length; i++) {
+            tempList.add(nums[i]);
+            getAllSubsets(nums, tempList, i + 1, results);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+
+    public static void testKthLargest() {
+	    int [] nums = new int[] {3,2,1,5,6,4};
+	    int kthLargest = new ArraysStrings().findKthLargest(nums, 2);
+	    System.out.println("Kth largest element = " + kthLargest);
+    }
+    public int findKthLargest(int[] nums, int k) {
+
+        final PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int val : nums) {
+            pq.offer(val);
+
+            if(pq.size() > k) {
+                pq.poll();
+            }
+        }
+        return pq.peek();
+    }
+
+//    159. Longest Substring with At Most Two Distinct Characters
+//    Given a string, find the length of the longest substring T that contains at most 2 distinct characters.
+//    For example, Given s = “eceba”,
+//    T is "ece" which its length is 3.
+    public static void testLongestSubstringWithTwoDistinctCharacters() {
+	    String s = "eceba";
+	    int len = new ArraysStrings().lengthOfLongestSubstringTwoDistinct(s);
+	    System.out.println("Longest substring length = " + len);
+    }
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int start = 0, end = 0;
+        int counter = 0;
+        int maxLen = Integer.MIN_VALUE;
+        while (end < s.length()) {
+            char ch = s.charAt(end);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+            if (map.get(ch) == 1) counter++;
+            end++;
+            while(counter > 2) {
+                char temp = s.charAt(start);
+                map.put(temp, map.get(temp) - 1);
+                if (map.get(temp) == 0) {
+                    counter--;
+                }
+                start++;
+            }
+            maxLen = Math.max(maxLen, end - start);
+        }
+	    return maxLen;
+
+    }
+
+
+//	582. Kill Process
+//	Given n processes, each process has a unique PID (process id) and its PPID (parent process id).
+//	Each process only has one parent process, but may have one or more children processes. This is just like a tree structure. Only one process has PPID that is 0, which means this process has no parent process. All the PIDs will be distinct positive integers.
+//	We use two list of integers to represent a list of processes, where the first list contains PID for each process and the second list contains the corresponding PPID.
+//	Now given the two lists, and a PID representing a process you want to kill, return a list of PIDs of processes that will be killed in the end. You should assume that when a process is killed, all its children processes will be killed. No order is required for the final answer.
+//			Example 1:
+//	Input:
+//	pid =  [1, 3, 10, 5]
+//	ppid = [3, 0, 5, 3]
+	public static void testKillProcess() {
+		List<Integer> pid = new ArrayList<>();
+		pid.add(1);
+		pid.add(3);
+		pid.add(10);
+		pid.add(5);
+		List<Integer> ppid = new ArrayList<>();
+		ppid.add(3);
+		ppid.add(0);
+		ppid.add(5);
+		ppid.add(3);
+		List<Integer> killList = new ArraysStrings().killProcess(pid, ppid, 5);
+		System.out.println("Kill list = " + killList.toString());
+	}
+	public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
+		if (kill == 0) return pid;
+		Map<Integer, Set<Integer>> map = new HashMap<>();
+
+		for (int i = 0; i < pid.size(); i++) {
+			map.put(pid.get(i), new HashSet<>());
+		}
+		for (int i = 0; i < ppid.size(); i++) {
+			if (map.containsKey(ppid.get(i))) {
+				Set<Integer> children = map.get(ppid.get(i));
+				children.add(pid.get(i));
+				map.put(ppid.get(i), children);
+			}
+		}
+		List<Integer> result = new ArrayList<>();
+		traverse(map, result, kill);
+		return result;
+	}
+	private void traverse(Map<Integer, Set<Integer>> map, List<Integer> result, int kill) {
+		result.add(kill);
+		Set<Integer> children = map.get(kill);
+		for(Integer i : children) {
+			traverse(map, result, i);
+		}
+	}
+
+	public static void testAllPermutations() {
+		List<String> permutations = new ArraysStrings().allPermutations("abcd");
+	}
+
+	private List<String> allPermutations(String s) {
+		List<String> permutations = new ArrayList<>();
+		allPermutations(s, permutations, "");
+//		allPermutations(s, "", 0, permutations);
+		System.out.println("Permuations = " + permutations);
+		return permutations;
+	}
+
+	private void allPermutations(String s, List<String> results, String prefix) {
+	    if (s.isEmpty()) {
+	        results.add(prefix);
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            String rem = s.substring(0, i) + s.substring(i + 1);
+            allPermutations(rem, results, prefix + s.charAt(i));
+        }
+    }
+
 }
 

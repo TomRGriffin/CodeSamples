@@ -1,5 +1,8 @@
 package Samples;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LinkedInLeetCode {
 //    744. Find Smallest Letter Greater Than Target
 //    Given a list of sorted characters letters containing only lowercase letters, and given a target letter target, find the smallest element in the list that is larger than the given target.
@@ -245,4 +248,70 @@ public class LinkedInLeetCode {
         return Math.min(costs[n - 1][0], Math.min(costs[n - 1][1], costs[n - 1][2]));
     }
 
+
+//    647. Palindromic Substrings
+//    Given a string, your task is to count how many palindromic substrings in this string.
+//    The substrings with different start indexes or end indexes are counted as different substrings even they consist
+//    of same characters.
+//    Example 1:
+//    Input: "abc"
+//    Output: 3
+//    Explanation: Three palindromic strings: "a", "b", "c".
+//    Example 2:
+//    Input: "aaa"
+//    Output: 6
+//    Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
+    public static void testPalindromicSubstrings() {
+        String s = "aaa";
+        int count = new LinkedInLeetCode().countSubstrings(s);
+        System.out.println("Count of palindromes = " + count);
+    }
+    int counts = 0;
+    public int countSubstrings(String s) {
+        if(s == null || s.isEmpty()) return 0;
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            expandMiddle(s, i, i, count);
+            expandMiddle(s, i, i + 1, count);
+        }
+        return counts;
+    }
+
+    private void expandMiddle(String s, int left, int right, int count) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            counts++;
+            left--;
+            right++;
+        }
+    }
+
+    public int countSubstringsBruetForce(String s) {
+        if (s == null || s.isEmpty()) return 0;
+        List<String> list = new ArrayList<>();
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = s.length(); j > i; j--) {
+                String str = s.substring(i, j);
+                if (list.contains(str)){
+                    count++;
+                } else if (isPalindrome(str)) {
+                    list.add(str);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    private boolean isPalindrome(String s) {
+        int i = 0, j = s.length() - 1;
+        while (i < j) {
+            if(s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
 }

@@ -471,4 +471,104 @@ public class FacebookLeetCode {
     boolean isBadVersion(int n) {
         return n == 1;
     }
+
+
+//    76. Minimum Window Substring
+//    Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+//    Example:
+//    Input: S = "ADOBECODEBANC", T = "ABC"
+//    Output: "BANC"
+
+    public static void testMinWindowSubstring() {
+        String s = "ADOBECODEBANC", t = "ABC";
+        String minWStr = new FacebookLeetCode().minWindow(s, t);
+        System.out.println("Min window substring = " + minWStr);
+    }
+
+    public String minWindow(String s, String t) {
+        int minStart = 0, minLen = Integer.MAX_VALUE;
+        int start = 0, end = 0;
+        int [] map = new int[256];
+        char[] sArray = s.toCharArray();
+        char[] tArray = t.toCharArray();
+        int count = tArray.length;
+        for (int i = 0; i < tArray.length ; i++) {
+            map[tArray[i]]++;
+        }
+
+        while (end < sArray.length) {
+            if (map[sArray[end]] > 0) {
+                count--;
+            }
+            map[sArray[end]]--;
+            while(count == 0) {
+                if ((end - start + 1) < minLen) {
+                    minLen = (end - start + 1);
+                    minStart = start;
+                }
+                map[sArray[start]]++;
+                if (map[sArray[start]] > 0) {
+                    count++;
+                }
+                start++;
+            }
+            end++;
+        }
+
+        if (minStart + minLen > sArray.length) return "";
+
+        return s.substring(minStart, minStart + minLen);
+    }
+
+//    252. Meeting Rooms
+//    Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), determine if a person could attend all meetings.
+//    Example 1:
+//    Input: [[0,30],[5,10],[15,20]]
+//    Output: false
+//    Example 2:
+//    Input: [[7,10],[2,4]]
+//    Output: true
+    public static void testMeetingRooms() {
+        //[[6,10],[13,14],[12,14]]
+        Interval[] intervals = new Interval[] {
+                new Interval(6, 10),
+                new Interval(13, 14),
+                new Interval(12, 14)
+        };
+        System.out.println("Can attend meetings = " + new FacebookLeetCode().canAttendMeetings(intervals));
+//        Interval[] intervals1 = new Interval[] {
+//                new Interval(7, 10),
+//                new Interval(2, 4)
+//        };
+//        System.out.println("Can attend meetings = " + new FacebookLeetCode().canAttendMeetings(intervals1));
+    }
+
+    public static class Interval {
+        int start;
+        int end;
+        Interval() { start = 0; end = 0; }
+        Interval(int s, int e) { start = s; end = e; }
+    }
+
+    Comparator<Interval> comparator = new Comparator<Interval>() {
+        @Override
+        public int compare(Interval o1, Interval o2) {
+            return o1.start - o2.start;
+        }
+    };
+
+    public boolean canAttendMeetings(Interval[] intervals) {
+        PriorityQueue<Interval> queue = new PriorityQueue<>(intervals.length, comparator);
+        queue.addAll(Arrays.asList(intervals));
+        while (!queue.isEmpty()) {
+            Interval firstInterval = queue.poll();
+            if (!queue.isEmpty()) {
+                Interval secondInterval = queue.peek();
+                if (secondInterval.start < firstInterval.end) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
